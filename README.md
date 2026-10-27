@@ -125,6 +125,28 @@ mediguide-ai/
 
 ---
 
+## 🌐 Cloud Deployment Options
+
+### Option A: Deploy on Vercel (Instant Web App + Serverless API)
+The repository is pre-configured for **zero-config deployment on Vercel**:
+- **Framework Preset:** Other / None
+- **Root Directory:** `./`
+- **Output Directory:** Automatically handled via [vercel.json](file:///d:/medical%20chatbot/vercel.json)
+- **Features on Vercel:**
+  - Modern, responsive web application (`public/index.html`) with glassmorphism & dark/light mode
+  - Serverless REST API (`api/index.py`) for symptom prediction, drug interactions, and emergency red-flag triage
+  - Pure Python linear algebra inference engine (0ms cold start, 0MB bloat, immune to serverless package size limits)
+
+### Option B: Deploy on Streamlit Community Cloud (Free 1-Click Python GUI)
+For the native Streamlit interactive interface:
+1. Go to **[share.streamlit.io](https://share.streamlit.io/)** and sign in with your GitHub account.
+2. Click **New app**.
+3. Select repository: `SelvaKumaran-G/medical-chatbot`.
+4. Main file path: `streamlit_app.py` (or `app.py`).
+5. Click **Deploy!**
+
+---
+
 ## ⚠️ Limitations
 
 - The symptom dataset is an **educational benchmark**, not clinically validated.

@@ -1,0 +1,2 @@
+# MediGuide AI - Vercel Serverless Function Dependencies
+# Pure Python standard library implementation - ultra-fast deployment (<5s cold start)
