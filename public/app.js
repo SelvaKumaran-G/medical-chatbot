@@ -729,6 +729,126 @@ function initSummaryExport() {
   }
 }
 
+// -----------------------------------------------------------------------------
+// 8. Client-Side Offline / Edge Predictor Fallback
+// -----------------------------------------------------------------------------
+let cachedWeights = null;
+let cachedMeds = null;
+
+async function runClientSideFallback(query) {
+  try {
+    if (!cachedWeights) {
+      const res = await fetch('/model_weights.json');
+      if (!res.ok) throw new Error('Could not load model weights');
+      cachedWeights = await res.json();
+    }
+    if (!cachedMeds) {
+      try {
+        const mRes = await fetch('/medicines.json');
+        if (mRes.ok) cachedMeds = await mRes.json();
+      } catch (e) {
+        cachedMeds = [];
+      }
+    }
+
+    const lowerQuery = query.toLowerCase();
+    const features = cachedWeights.feature_names || [];
+    const classes = cachedWeights.classes || [];
+    const coef = cachedWeights.coef || [];
+    const intercept = cachedWeights.intercept || [];
+
+    // Extract active symptoms
+    const active = [];
+    const negated = [];
+    for (const feat of features) {
+      const clean = feat.replace(/_/g, ' ');
+      if (lowerQuery.includes(clean) || lowerQuery.includes(feat)) {
+        const negRegex = new RegExp('(no|not|without|free of|denies)\\s+' + clean, 'i');
+        if (negRegex.test(lowerQuery)) {
+          negated.push(feat);
+        } else {
+          active.push(feat);
+        }
+      }
+    }
+
+    if (active.length === 0) {
+      renderPredictionResults({
+        status: 'ABSTAIN_NO_SYMPTOMS',
+        message: 'No recognized clinical symptoms were identified in your description. Try describing symptoms like "fever", "headache", "chills", "cough", or select quick symptoms.',
+        extracted_symptoms: [],
+        negated_symptoms: negated,
+        predictions: [],
+        follow_up_questions: [
+          'Where specifically are you experiencing pain or discomfort?',
+          'How long have you felt unwell, and do you have a fever or rash?'
+        ]
+      });
+      return;
+    }
+
+    // Dot product & softmax
+    const x = features.map(f => active.includes(f) ? 1 : 0);
+    const z = classes.map((c, cIdx) => {
+      let sum = intercept[cIdx] || 0;
+      for (let j = 0; j < features.length; j++) {
+        sum += (coef[cIdx][j] || 0) * x[j];
+      }
+      return sum;
+    });
+
+    const maxZ = Math.max(...z);
+    const expZ = z.map(v => Math.exp(v - maxZ));
+    const sumExp = expZ.reduce((a, b) => a + b, 0);
+    const probs = expZ.map(v => v / sumExp);
+
+    // Ranked top 3
+    const ranked = classes
+      .map((c, i) => ({ condition: c, prob: probs[i], index: i }))
+      .sort((a, b) => b.prob - a.prob)
+      .slice(0, 3);
+
+    const predictions = ranked.map(item => {
+      const expl = [];
+      for (const s of active) {
+        const fIdx = features.indexOf(s);
+        const w = coef[item.index][fIdx] || 0;
+        expl.push({
+          symptom: s.replace(/_/g, ' '),
+          weight: Math.round(w * 1000) / 1000
+        });
+      }
+      expl.sort((a, b) => b.weight - a.weight);
+      return {
+        condition: item.condition,
+        probability: Math.round(item.prob * 10000) / 10000,
+        percentage: Math.round(item.prob * 1000) / 10 + '%',
+        feature_explanations: expl
+      };
+    });
+
+    const topCond = predictions[0] ? predictions[0].condition.toLowerCase() : '';
+    const refMeds = (cachedMeds || []).filter(m => {
+      return (m.labeled_indications || []).some(ind => ind.toLowerCase().includes(topCond));
+    }).slice(0, 4);
+
+    renderPredictionResults({
+      status: 'PREDICTION_SUCCESS',
+      extracted_symptoms: active,
+      negated_symptoms: negated,
+      predictions: predictions,
+      reference_medicines: refMeds,
+      follow_up_questions: [
+        'Have your symptoms worsened or stayed the same over the last 24-48 hours?',
+        'Are you currently taking any prescription medications or over-the-counter supplements?'
+      ]
+    });
+  } catch (e) {
+    console.error('Client-side fallback error:', e);
+    alert('Unable to analyze symptoms. Please check your network or try rephrasing.');
+  }
+}
+
 // Utility: HTML Escaper to prevent XSS
 function escapeHtml(str) {
   if (!str) return '';

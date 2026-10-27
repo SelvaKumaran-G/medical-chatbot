@@ -1,0 +1,9 @@
+# Vercel deployment ignore rules
+# Prevent Streamlit files and test runners from being compiled as serverless functions
+app.py
+streamlit_app.py
+.venv/
+tests/
+reports/
+data/raw/
+scratch/

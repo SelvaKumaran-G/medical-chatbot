@@ -1,7 +1,8 @@
 """
-MediGuide AI — Vercel Serverless API & WSGI Entrypoint
-Ultra-lightweight, zero-heavy-dependency REST API for clinical triage, symptom extraction,
-ML condition prediction, verified medicine retrieval, and safety interaction screening.
+MediGuide AI — Vercel Serverless Function Entrypoint
+Official BaseHTTPRequestHandler implementation for Vercel Python Runtime.
+Handles clinical triage, symptom entity extraction, ML differential prediction,
+medicine retrieval, and drug-drug interaction safety checks.
 """
 
 import os
@@ -9,6 +10,7 @@ import sys
 import json
 import math
 import urllib.parse
+from http.server import BaseHTTPRequestHandler
 from typing import Dict, List, Any, Optional
 
 # Ensure project root is in sys.path
@@ -60,14 +62,12 @@ def predict_conditions_pure(active_symptoms: List[str], top_k: int = 3) -> List[
     coef = wdata["coef"]
     intercept = wdata["intercept"]
 
-    # Compute dot product
     x = [1 if f in active_symptoms else 0 for f in features]
     z = [
         sum(coef[c][j] * x[j] for j in range(len(features))) + intercept[c]
         for c in range(len(classes))
     ]
 
-    # Softmax with numerical stability
     max_z = max(z)
     exp_z = [math.exp(val - max_z) for val in z]
     total_exp = sum(exp_z)
@@ -101,15 +101,11 @@ def handle_predict_request(body: Dict[str, Any]) -> Dict[str, Any]:
     text = body.get("text", "")
     profile = body.get("patient_profile", {})
 
-    # 1. Emergency Heuristics Triage
     triage_result = screen_emergency_red_flags(text)
-
-    # 2. Extract Symptoms
     extraction = extract_symptoms_from_text(text)
     confirmed = extraction.get("confirmed_symptoms", [])
     negated = extraction.get("negated_symptoms", [])
 
-    # 3. Model Predictions
     if not confirmed:
         predictions = []
         status = "ABSTAIN_NO_SYMPTOMS"
@@ -132,12 +128,10 @@ def handle_predict_request(body: Dict[str, Any]) -> Dict[str, Any]:
             "Are you currently taking any prescription medications or over-the-counter supplements?"
         ]
 
-        # 4. Medicine Retrieval for Top Condition
         retriever = get_medicine_retriever()
         top_condition = predictions[0]["condition"] if predictions else ""
         ref_meds = retriever.get_labeled_medicines_for_condition(top_condition) if top_condition else []
 
-        # 5. Patient Profile Safety Evaluation
         safety_checker = get_safety_checker()
         safety_alerts = []
         if profile and ref_meds:
@@ -206,95 +200,122 @@ def handle_medicines_search(query: str, condition: str = "") -> Dict[str, Any]:
         results = retriever.medicines[:10]
     return {"count": len(results), "medicines": results}
 
-def app(environ, start_response):
-    """Standard WSGI entrypoint callable for Vercel, Gunicorn, and WSGI servers."""
-    path = environ.get("PATH_INFO", "/")
-    method = environ.get("REQUEST_METHOD", "GET").upper()
 
-    cors_headers = [
-        ("Access-Control-Allow-Origin", "*"),
-        ("Access-Control-Allow-Methods", "GET, POST, OPTIONS"),
-        ("Access-Control-Allow-Headers", "Content-Type, Authorization"),
-    ]
+# =============================================================================
+# Vercel Serverless HTTP Handler Class
+# =============================================================================
+class handler(BaseHTTPRequestHandler):
+    def _send_json_response(self, status_code: int, data: Dict[str, Any]):
+        response_bytes = json.dumps(data).encode("utf-8")
+        self.send_response(status_code)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(response_bytes)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.end_headers()
+        self.wfile.write(response_bytes)
 
-    # Preflight CORS
-    if method == "OPTIONS":
-        start_response("204 No Content", cors_headers)
-        return [b""]
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.end_headers()
 
-    # Parse query params
-    query_string = environ.get("QUERY_STRING", "")
-    query_params = urllib.parse.parse_qs(query_string)
+    def do_GET(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path.rstrip("/")
+        query = urllib.parse.parse_qs(parsed.query)
 
-    # Read POST body
-    body = {}
-    if method == "POST":
         try:
-            content_length = int(environ.get("CONTENT_LENGTH", 0))
-            if content_length > 0:
-                body_bytes = environ["wsgi.input"].read(content_length)
-                body = json.loads(body_bytes.decode("utf-8"))
+            if path in ("/api/health", "/api") or path == "":
+                self._send_json_response(200, {
+                    "name": "MediGuide AI Clinical API",
+                    "status": "healthy",
+                    "version": "1.0.0",
+                    "endpoints": ["/api/predict", "/api/safety", "/api/medicines", "/api/symptoms", "/api/health"]
+                })
+            elif path == "/api/medicines":
+                q = query.get("query", [""])[0]
+                cond = query.get("condition", [""])[0]
+                self._send_json_response(200, handle_medicines_search(q, cond))
+            elif path == "/api/symptoms":
+                weights = get_model_weights()
+                features = weights.get("feature_names", [])
+                self._send_json_response(200, {"symptoms": [f.replace("_", " ") for f in features]})
+            else:
+                self._send_json_response(404, {"error": f"Endpoint not found: {self.path}"})
+        except Exception as e:
+            self._send_json_response(500, {"error": str(e)})
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path.rstrip("/")
+
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+            body_bytes = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            body = json.loads(body_bytes.decode("utf-8")) if body_bytes else {}
         except Exception:
             body = {}
 
-    headers = [("Content-Type", "application/json")] + cors_headers
+        try:
+            if path == "/api/predict":
+                self._send_json_response(200, handle_predict_request(body))
+            elif path == "/api/safety":
+                self._send_json_response(200, handle_safety_check(body))
+            elif path == "/api/triage":
+                text = body.get("text", "")
+                self._send_json_response(200, screen_emergency_red_flags(text))
+            else:
+                self._send_json_response(404, {"error": f"Endpoint not found: {self.path}"})
+        except Exception as e:
+            self._send_json_response(500, {"error": str(e)})
+
+
+# WSGI application callable fallback for WSGI runners
+def app(environ, start_response):
+    path = environ.get("PATH_INFO", "/").rstrip("/")
+    method = environ.get("REQUEST_METHOD", "GET").upper()
+    headers = [
+        ("Content-Type", "application/json; charset=utf-8"),
+        ("Access-Control-Allow-Origin", "*"),
+        ("Access-Control-Allow-Methods", "GET, POST, OPTIONS"),
+        ("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    ]
+
+    if method == "OPTIONS":
+        start_response("204 No Content", headers)
+        return [b""]
+
+    content_length = int(environ.get("CONTENT_LENGTH", 0) or 0)
+    body_bytes = environ["wsgi.input"].read(content_length) if content_length > 0 else b"{}"
+    try:
+        body = json.loads(body_bytes.decode("utf-8")) if body_bytes else {}
+    except Exception:
+        body = {}
+
+    query = urllib.parse.parse_qs(environ.get("QUERY_STRING", ""))
 
     try:
-        if path.endswith("/api/predict") or path == "/api/predict":
-            data = handle_predict_request(body)
+        if path in ("/api/health", "/api") or path == "":
             start_response("200 OK", headers)
-            return [json.dumps(data).encode("utf-8")]
-
-        elif path.endswith("/api/safety") or path == "/api/safety":
-            data = handle_safety_check(body)
+            return [json.dumps({"name": "MediGuide AI", "status": "healthy"}).encode("utf-8")]
+        elif path == "/api/predict":
             start_response("200 OK", headers)
-            return [json.dumps(data).encode("utf-8")]
-
-        elif path.endswith("/api/medicines") or path == "/api/medicines":
-            q = query_params.get("query", [""])[0]
-            cond = query_params.get("condition", [""])[0]
-            data = handle_medicines_search(q, cond)
+            return [json.dumps(handle_predict_request(body)).encode("utf-8")]
+        elif path == "/api/safety":
             start_response("200 OK", headers)
-            return [json.dumps(data).encode("utf-8")]
-
-        elif path.endswith("/api/triage") or path == "/api/triage":
-            text = body.get("text", query_params.get("text", [""])[0])
-            data = screen_emergency_red_flags(text)
+            return [json.dumps(handle_safety_check(body)).encode("utf-8")]
+        elif path == "/api/medicines":
+            q = query.get("query", [""])[0]
+            cond = query.get("condition", [""])[0]
             start_response("200 OK", headers)
-            return [json.dumps(data).encode("utf-8")]
-
-        elif path.endswith("/api/symptoms") or path == "/api/symptoms":
-            weights = get_model_weights()
-            features = weights.get("feature_names", [])
-            start_response("200 OK", headers)
-            return [json.dumps({"symptoms": [f.replace("_", " ") for f in features]}).encode("utf-8")]
-
-        elif path.endswith("/api/health") or path == "/api/health" or path in ("/", "/api"):
-            data = {
-                "name": "MediGuide AI Clinical API",
-                "version": "1.0.0",
-                "status": "healthy",
-                "deployment": "Vercel Serverless / WSGI",
-                "endpoints": [
-                    "POST /api/predict",
-                    "GET /api/medicines",
-                    "POST /api/safety",
-                    "POST /api/triage",
-                    "GET /api/symptoms",
-                    "GET /api/health"
-                ]
-            }
-            start_response("200 OK", headers)
-            return [json.dumps(data).encode("utf-8")]
-
+            return [json.dumps(handle_medicines_search(q, cond)).encode("utf-8")]
         else:
-            # 404
             start_response("404 Not Found", headers)
-            return [json.dumps({"error": f"Endpoint not found: {path}"}).encode("utf-8")]
-
+            return [json.dumps({"error": "Not found"}).encode("utf-8")]
     except Exception as e:
         start_response("500 Internal Server Error", headers)
         return [json.dumps({"error": str(e)}).encode("utf-8")]
-
-# Vercel entrypoint alias
-handler = app

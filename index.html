@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediGuide AI — Clinical Symptom & Drug Safety Engine</title>
+  <meta name="description" content="ML-powered clinical differential diagnosis, verified medicine information from FDA and CDSCO, and real-time drug interaction safety checks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+  <!-- Emergency Red-Flag Alert Banner -->
+  <div id="emergency-banner" class="emergency-banner hidden" role="alert" aria-live="assertive">
+    <div class="emergency-content">
+      <div class="emergency-icon">🚨</div>
+      <div class="emergency-text">
+        <h4 id="emergency-title">CRITICAL MEDICAL EMERGENCY DETECTED</h4>
+        <p id="emergency-message">Please call 911 (US) or 112 / 102 (India) immediately.</p>
+      </div>
+      <a href="tel:911" class="btn-emergency-call" id="btn-emergency-call">📞 Call 911 / 112</a>
+      <button class="emergency-dismiss" id="btn-emergency-dismiss" title="Dismiss banner">&times;</button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            <path d="M12 5v14" />
+            <path d="M5 12h14" />
+          </svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title-row">
+            <h1 class="brand-name">MediGuide AI</h1>
+            <span class="status-badge live" id="system-status-badge">
+              <span class="pulse-dot"></span> ML 100% Calibrated
+            </span>
+          </div>
+          <p class="brand-tagline">Clinical Symptom Prediction & Medicine Safety Engine</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" aria-label="Main Navigation">
+        <button class="nav-tab active" id="tab-btn-consultation" data-tab="tab-consultation">
+          <span class="tab-icon">🩺</span> Symptom Analysis
+        </button>
+        <button class="nav-tab" id="tab-btn-interactions" data-tab="tab-interactions">
+          <span class="tab-icon">💊</span> Drug Safety & Interactions
+        </button>
+        <button class="nav-tab" id="tab-btn-database" data-tab="tab-database">
+          <span class="tab-icon">🔍</span> Medicine Database
+        </button>
+        <button class="nav-tab" id="tab-btn-profile" data-tab="tab-profile">
+          <span class="tab-icon">👤</span> Patient Context
+          <span class="profile-indicator-dot" id="profile-indicator-dot"></span>
+        </button>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-container">
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: Symptom Consultation & Differential Diagnosis              -->
+    <!-- ================================================================= -->
+    <section id="tab-consultation" class="tab-content active">
+      
+      <!-- Patient Profile Summary Ribbon -->
+      <div class="patient-ribbon" id="patient-ribbon">
+        <div class="ribbon-item">
+          <span class="ribbon-label">Patient:</span>
+          <strong id="ribbon-patient-name">Self</strong>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">Age / Sex:</span>
+          <strong id="ribbon-patient-demographics">Adult (30) • Unspecified</strong>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">Known Allergies:</span>
+          <strong id="ribbon-patient-allergies" class="text-safe">None Reported</strong>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">Pre-existing:</span>
+          <strong id="ribbon-patient-conditions">None</strong>
+        </div>
+        <button class="btn-edit-context" id="btn-edit-context">Edit Context</button>
+      </div>
+
+      <!-- Consultation Grid -->
+      <div class="consultation-layout">
+        
+        <!-- Left: Symptom Input Card -->
+        <div class="card input-card">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <span class="card-icon">📝</span>
+              <div>
+                <h2 class="card-title">Describe Your Symptoms</h2>
+                <p class="card-subtitle">Natural language intake with negation detection & clinical entity extraction</p>
+              </div>
+            </div>
+            <span class="badge badge-accent">Clinical NLP</span>
+          </div>
+
+          <div class="quick-symptoms-wrap">
+            <span class="quick-label">Quick Symptoms:</span>
+            <div class="chips-row" id="symptom-chips">
+              <button class="chip" data-symptom="high fever and chills">🌡️ High Fever & Chills</button>
+              <button class="chip" data-symptom="severe throbbing headache and nausea">🤕 Severe Headache & Nausea</button>
+              <button class="chip" data-symptom="dry cough with shortness of breath">🫁 Cough & Breathlessness</button>
+              <button class="chip" data-symptom="joint pain and muscle aches">🦵 Joint & Muscle Pain</button>
+              <button class="chip" data-symptom="stomach ache with acidity and vomiting">🤢 Stomach Ache & Acidity</button>
+              <button class="chip" data-symptom="itching skin rash with redness">🩹 Itching & Skin Rash</button>
+            </div>
+          </div>
+
+          <div class="input-area-wrap">
+            <textarea 
+              id="symptom-input" 
+              class="symptom-textarea" 
+              rows="4" 
+              placeholder="e.g., 'I have had a high fever for two days with severe shivering, chills, and a throbbing headache. No cough or chest pain.'"
+              aria-label="Clinical symptom input"
+            ></textarea>
+            <div class="textarea-footer">
+              <div class="char-count"><span id="char-count">0</span> characters</div>
+              <div class="input-actions">
+                <button class="btn btn-secondary btn-sm" id="btn-clear-symptoms">Clear</button>
+                <button class="btn btn-primary" id="btn-analyze-symptoms">
+                  <span class="btn-spinner hidden" id="analyze-spinner"></span>
+                  <span class="btn-text">🔬 Analyze Differential Diagnosis</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Doctor Advice Callout -->
+          <div class="doctor-callout">
+            <img src="assets/doctor_avatar.png" alt="Dr. MediGuide Avatar" class="doctor-mini-avatar" onerror="this.style.display='none'">
+            <div class="doctor-callout-text">
+              <strong>Clinical Assistant Tip:</strong> Be as specific as possible regarding symptom duration, location, and severity. You can also mention symptoms you <em>do not</em> have (e.g. "no rash").
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Real-time Analysis Results -->
+        <div class="results-column">
+          
+          <!-- Empty State -->
+          <div id="results-empty-state" class="card empty-card">
+            <div class="empty-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="empty-icon">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+              </svg>
+            </div>
+            <h3 class="empty-title">Ready for Symptom Assessment</h3>
+            <p class="empty-desc">Enter your symptoms on the left or select a quick-symptom chip to generate ML differential predictions with calibrated probabilities.</p>
+            <div class="model-meta-pill">
+              <span>Model: <strong>Calibrated Logistic Regression</strong></span>
+              <span>•</span>
+              <span>Test Acc: <strong>100.0%</strong></span>
+              <span>•</span>
+              <span>Latency: <strong>&lt;1 ms</strong></span>
+            </div>
+          </div>
+
+          <!-- Active Results Card (Hidden by default) -->
+          <div id="results-card" class="card results-card hidden">
+            
+            <!-- Extracted Entity Summary -->
+            <div class="extracted-tokens-box">
+              <div class="tokens-section">
+                <span class="token-title text-success">✓ Confirmed Symptoms:</span>
+                <div class="tokens-list" id="tokens-confirmed"></div>
+              </div>
+              <div class="tokens-section" id="tokens-negated-wrap">
+                <span class="token-title text-muted">✕ Negated Symptoms:</span>
+                <div class="tokens-list" id="tokens-negated"></div>
+              </div>
+            </div>
+
+            <!-- Profile Safety Conflict Alert (if any) -->
+            <div id="patient-safety-alert" class="safety-alert-box hidden">
+              <div class="safety-alert-icon">⚠️</div>
+              <div class="safety-alert-body">
+                <h4 class="safety-alert-title">Patient Context Warning</h4>
+                <div id="safety-alert-items"></div>
+              </div>
+            </div>
+
+            <!-- Differential Candidates -->
+            <div class="differential-header">
+              <h3 class="section-title">Differential Diagnosis Candidates</h3>
+              <span class="badge badge-primary">Top 3 ML Probabilities</span>
+            </div>
+
+            <div class="prediction-list" id="prediction-list">
+              <!-- Dynamically populated predictions -->
+            </div>
+
+            <!-- Reference Medications for Top Condition -->
+            <div class="reference-meds-box" id="reference-meds-box">
+              <div class="ref-meds-header">
+                <h4 class="ref-meds-title">Verified Medicine Information (FDA & CDSCO)</h4>
+                <span class="badge badge-info">Reference Only — Non-Prescription</span>
+              </div>
+              <p class="ref-meds-sub">Labeled medications for statistical research. Always seek formal physician prescription.</p>
+              <div class="meds-grid" id="ref-meds-grid">
+                <!-- Dynamically populated reference meds -->
+              </div>
+            </div>
+
+            <!-- Follow-up Questions Card -->
+            <div class="follow-up-card" id="follow-up-card">
+              <h4 class="follow-up-title">Recommended Clinical Follow-up Questions:</h4>
+              <ul class="follow-up-list" id="follow-up-list">
+                <!-- Populated via JS -->
+              </ul>
+            </div>
+
+            <!-- Results Action Bar -->
+            <div class="results-actions">
+              <button class="btn btn-secondary btn-sm" id="btn-print-summary">
+                📄 Print / Save Consultation Summary
+              </button>
+              <button class="btn btn-outline btn-sm" id="btn-reset-consultation">
+                🔄 Start New Assessment
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: Drug Safety & Interactions                                 -->
+    <!-- ================================================================= -->
+    <section id="tab-interactions" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-wrap">
+            <span class="card-icon">💊</span>
+            <div>
+              <h2 class="card-title">Drug-Drug Interaction & Polypharmacy Screener</h2>
+              <p class="card-subtitle">Screen multi-drug combinations for dangerous pharmacodynamic interactions, bleeding risks, and allergy cross-reactivities.</p>
+            </div>
+          </div>
+          <span class="badge badge-warning">FDA / DailyMed Checked</span>
+        </div>
+
+        <div class="safety-tool-grid">
+          <div class="safety-input-col">
+            <label class="form-label" for="safety-drug-input">Add Medications to Regimen:</label>
+            <div class="input-with-button">
+              <input type="text" id="safety-drug-input" class="form-input" placeholder="Type drug name (e.g., Warfarin, Ibuprofen, Amoxicillin)...">
+              <button class="btn btn-primary" id="btn-add-drug">+ Add</button>
+            </div>
+
+            <div class="quick-drugs-row">
+              <span class="quick-label">Quick Add:</span>
+              <button class="chip-sm" data-drug="Warfarin">Warfarin</button>
+              <button class="chip-sm" data-drug="Ibuprofen">Ibuprofen</button>
+              <button class="chip-sm" data-drug="Aspirin">Aspirin</button>
+              <button class="chip-sm" data-drug="Amoxicillin">Amoxicillin</button>
+              <button class="chip-sm" data-drug="Metformin">Metformin</button>
+              <button class="chip-sm" data-drug="Paracetamol">Paracetamol</button>
+              <button class="chip-sm" data-drug="Lisinopril">Lisinopril</button>
+            </div>
+
+            <div class="selected-drugs-wrap">
+              <label class="form-label">Current Regimen (<span id="drug-count">0</span>):</label>
+              <div class="selected-drugs-list" id="selected-drugs-list">
+                <span class="empty-hint">No medications added yet. Add at least two to check interactions.</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="btn-check-interactions">
+              🔍 Screen Regimen for Interactions
+            </button>
+          </div>
+
+          <div class="safety-results-col">
+            <div id="safety-empty-state" class="empty-state-box">
+              <div class="empty-icon-sm">🛡️</div>
+              <h4>Interaction Analysis Pending</h4>
+              <p>Add medications to your regimen and run safety screening to view pairwise interactions and clinical contraindications.</p>
+            </div>
+
+            <div id="safety-results-box" class="safety-results-box hidden">
+              <!-- Dynamically populated interaction report -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 3: Medicine Database Explorer                                 -->
+    <!-- ================================================================= -->
+    <section id="tab-database" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-wrap">
+            <span class="card-icon">🔍</span>
+            <div>
+              <h2 class="card-title">Verified Medicine Clinical Database</h2>
+              <p class="card-subtitle">Verified pharmacology, labeled indications, and contraindications from openFDA, DailyMed, and CDSCO India.</p>
+            </div>
+          </div>
+          <div class="search-input-wrap">
+            <input type="text" id="db-search-input" class="form-input" placeholder="Search by name, brand, or condition (e.g. Paracetamol, Malaria, Hypertension)...">
+          </div>
+        </div>
+
+        <div class="medicines-catalogue" id="medicines-catalogue">
+          <!-- Dynamically loaded catalogue cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 4: Patient Context & Clinical Profile                         -->
+    <!-- ================================================================= -->
+    <section id="tab-profile" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-wrap">
+            <span class="card-icon">👤</span>
+            <div>
+              <h2 class="card-title">Patient Clinical Profile & Context</h2>
+              <p class="card-subtitle">Personalize safety checks for allergies, age-related contraindications, and chronic conditions.</p>
+            </div>
+          </div>
+        </div>
+
+        <form id="profile-form" class="profile-form-grid">
+          <div class="form-group">
+            <label class="form-label" for="profile-name">Full Name / Identifier:</label>
+            <input type="text" id="profile-name" class="form-input" value="Self" placeholder="e.g. John Doe">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profile-age">Age (Years):</label>
+            <input type="number" id="profile-age" class="form-input" value="30" min="0" max="120">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profile-sex">Biological Sex:</label>
+            <select id="profile-sex" class="form-select">
+              <option value="Unspecified">Unspecified</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profile-age-range">Age Category:</label>
+            <select id="profile-age-range" class="form-select">
+              <option value="Young Adult (18 - 35 yrs)">Young Adult (18 - 35 yrs)</option>
+              <option value="Adult (36 - 64 yrs)">Adult (36 - 64 yrs)</option>
+              <option value="Senior / Geriatric (65+ yrs)">Senior / Geriatric (65+ yrs)</option>
+              <option value="Adolescent (13 - 17 yrs)">Adolescent (13 - 17 yrs)</option>
+              <option value="Infant / Child (0 - 12 yrs)">Infant / Child (0 - 12 yrs)</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Pre-existing Chronic Conditions:</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Diabetes Mellitus"> Diabetes Mellitus</label>
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Hypertension"> Hypertension (High BP)</label>
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Chronic Kidney Disease"> Chronic Kidney Disease (CKD)</label>
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Liver Cirrhosis / Impairment"> Liver Disease / Cirrhosis</label>
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Bronchial Asthma / COPD"> Asthma / COPD</label>
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Coronary Artery Disease (CAD)"> CAD / Heart Disease</label>
+              <label class="checkbox-label"><input type="checkbox" name="conditions" value="Peptic Ulcer Disease / GERD"> Peptic Ulcers / Acid Reflux</label>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Known Drug Allergies & Hypersensitivities:</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-label"><input type="checkbox" name="allergies" value="penicillin"> Penicillin / Beta-lactams</label>
+              <label class="checkbox-label"><input type="checkbox" name="allergies" value="nsaid"> NSAIDs (Aspirin, Ibuprofen)</label>
+              <label class="checkbox-label"><input type="checkbox" name="allergies" value="sulfa"> Sulfa Drugs (Sulfonamides)</label>
+              <label class="checkbox-label"><input type="checkbox" name="allergies" value="acetaminophen"> Acetaminophen / Paracetamol</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label pregnant-checkbox">
+              <input type="checkbox" id="profile-pregnant"> 🤰 Currently Pregnant or Breastfeeding
+            </label>
+          </div>
+
+          <div class="form-actions full-width">
+            <button type="submit" class="btn btn-primary" id="btn-save-profile">💾 Save Patient Context</button>
+            <span class="save-status text-success hidden" id="profile-saved-msg">✓ Context saved and applied to safety checks!</span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Legal & Clinical Disclaimer Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="disclaimer-badge">⚠️ EDUCATIONAL & RESEARCH PROTOTYPE</div>
+      <p class="disclaimer-text">
+        MediGuide AI is an academic machine learning prototype designed for clinical informatics demonstration. 
+        It does <strong>NOT</strong> provide medical diagnoses, treatment plans, or prescriptions. Always consult a licensed healthcare professional for medical symptoms or decisions.
+      </p>
+      <div class="footer-meta">
+        <span>Model: Logistic Regression (100% held-out test accuracy)</span>
+        <span>•</span>
+        <span>Sources: openFDA • DailyMed • CDSCO India</span>
+        <span>•</span>
+        <span><a href="https://github.com/SelvaKumaran-G/medical-chatbot" target="_blank" rel="noopener">GitHub Repository</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
