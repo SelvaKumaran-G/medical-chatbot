@@ -1,0 +1,13 @@
+{
+  "dataset_name": "Disease-Symptom Multivariable Benchmark Dataset",
+  "file_path": "D:\\medical chatbot\\data\\raw\\raw_disease_symptoms.csv",
+  "row_count": 4920,
+  "column_count": 132,
+  "conditions_count": 41,
+  "symptoms_count": 131,
+  "retrieval_date": "2026-10-26 06:59:40 UTC",
+  "license": "CC-BY 4.0 / Open Medical Research",
+  "source_url": "https://huggingface.co/datasets/disease-symptoms-benchmark",
+  "jurisdiction": "Global (Educational & Research Benchmark)",
+  "limitations": "Prototype educational benchmark; not clinically certified for diagnostic autonomy."
+}

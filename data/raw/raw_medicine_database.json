@@ -1,0 +1,603 @@
+[
+  {
+    "generic_name": "Paracetamol (Acetaminophen)",
+    "brand_names": [
+      "Tylenol",
+      "Calpol",
+      "Dolo 650",
+      "Panadol",
+      "Crocin"
+    ],
+    "active_ingredients": [
+      "Acetaminophen"
+    ],
+    "drug_class": "Analgesic and Antipyretic",
+    "labeled_indications": [
+      "Fever",
+      "Mild to moderate pain",
+      "Headache",
+      "Common Cold",
+      "Influenza",
+      "Muscle pain",
+      "Toothache",
+      "Arthritis"
+    ],
+    "contraindications": [
+      "Severe active liver disease or hepatic impairment",
+      "Known severe hypersensitivity to paracetamol"
+    ],
+    "warnings_and_precautions": [
+      "Boxed Warning: Severe liver damage may occur if exceeding 4,000 mg within 24 hours.",
+      "Do not consume concurrently with other acetaminophen-containing medications.",
+      "Exercise extreme caution in chronic alcohol users."
+    ],
+    "common_side_effects": [
+      "Nausea",
+      "Stomach upset",
+      "Rash (rare)",
+      "Headache"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Warfarin",
+        "severity": "Moderate",
+        "effect": "May prolong INR and increase bleeding risk with prolonged use."
+      },
+      {
+        "interacting_drug": "Alcohol",
+        "severity": "Severe",
+        "effect": "Potentiates hepatotoxicity risk."
+      },
+      {
+        "interacting_drug": "Isoniazid",
+        "severity": "Moderate",
+        "effect": "Increases risk of liver injury."
+      }
+    ],
+    "allergy_risks": [
+      "Rare risk of severe cutaneous adverse reactions (Stevens-Johnson Syndrome)."
+    ],
+    "pregnancy_breastfeeding": "Category B / Generally considered compatible under medical supervision at lowest effective dose.",
+    "jurisdiction": "US FDA / CDSCO India (Over-the-Counter / Schedule H formulations)",
+    "source_org": "US FDA / DailyMed / CDSCO NLEM",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=tylenol-acetaminophen",
+    "label_revision_date": "2026-01-15"
+  },
+  {
+    "generic_name": "Ibuprofen",
+    "brand_names": [
+      "Advil",
+      "Motrin",
+      "Brufen",
+      "Nurofen"
+    ],
+    "active_ingredients": [
+      "Ibuprofen"
+    ],
+    "drug_class": "Nonsteroidal Anti-inflammatory Drug (NSAID)",
+    "labeled_indications": [
+      "Fever",
+      "Osteoarthritis",
+      "Arthritis",
+      "Dysmenorrhea",
+      "Mild to moderate pain",
+      "Joint pain",
+      "Migraine"
+    ],
+    "contraindications": [
+      "History of asthma, urticaria, or allergic reactions to aspirin or other NSAIDs",
+      "Active peptic ulcer disease or gastrointestinal bleeding",
+      "Severe heart failure",
+      "Coronary artery bypass graft (CABG) perioperative pain"
+    ],
+    "warnings_and_precautions": [
+      "Boxed Warning: Cardiovascular thrombotic events, myocardial infarction, and stroke risk.",
+      "Boxed Warning: Serious gastrointestinal bleeding, ulceration, and perforation.",
+      "Can cause fluid retention, renal impairment, and hypertension exacerbation."
+    ],
+    "common_side_effects": [
+      "Dyspepsia",
+      "Heartburn",
+      "Nausea",
+      "Dizziness",
+      "Abdominal discomfort"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Warfarin",
+        "severity": "Severe",
+        "effect": "Synergistic increase in major gastrointestinal bleeding risk."
+      },
+      {
+        "interacting_drug": "Aspirin",
+        "severity": "Major",
+        "effect": "Compromises cardioprotective antiplatelet effect of low-dose aspirin and increases GI ulcers."
+      },
+      {
+        "interacting_drug": "Lisinopril / ACE inhibitors",
+        "severity": "Moderate",
+        "effect": "Blunts antihypertensive efficacy and increases acute kidney injury risk."
+      },
+      {
+        "interacting_drug": "Lithium",
+        "severity": "Major",
+        "effect": "Reduces renal lithium clearance causing severe toxicity."
+      }
+    ],
+    "allergy_risks": [
+      "Aspirin-exacerbated respiratory disease (AERD), cross-reactivity with other NSAIDs."
+    ],
+    "pregnancy_breastfeeding": "Avoid at 20 weeks or later of pregnancy due to fetal renal dysfunction and premature ductus arteriosus closure.",
+    "jurisdiction": "US FDA / CDSCO India (Schedule H)",
+    "source_org": "US FDA / DailyMed",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ibuprofen-nsaid",
+    "label_revision_date": "2025-11-20"
+  },
+  {
+    "generic_name": "Amoxicillin",
+    "brand_names": [
+      "Amoxil",
+      "Mox",
+      "Novamox"
+    ],
+    "active_ingredients": [
+      "Amoxicillin trihydrate"
+    ],
+    "drug_class": "Aminopenicillin Antibiotic",
+    "labeled_indications": [
+      "Bacterial pneumonia",
+      "Urinary tract infection",
+      "Ear, nose, and throat infections",
+      "Skin infections",
+      "Impetigo",
+      "Typhoid (selected susceptible strains)"
+    ],
+    "contraindications": [
+      "History of severe hypersensitivity / anaphylaxis to penicillin or beta-lactams",
+      "History of amoxicillin-associated jaundice or hepatic dysfunction"
+    ],
+    "warnings_and_precautions": [
+      "Serious and occasionally fatal hypersensitivity (anaphylaxis) reactions.",
+      "Clostridioides difficile-associated diarrhea (CDAD) ranging from mild to fatal colitis.",
+      "Ineffective against viral infections (common cold, flu); inappropriate use causes antimicrobial resistance."
+    ],
+    "common_side_effects": [
+      "Diarrhea",
+      "Nausea",
+      "Skin rash",
+      "Vomiting"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Methotrexate",
+        "severity": "Severe",
+        "effect": "Decreases methotrexate renal clearance, raising toxicity risk."
+      },
+      {
+        "interacting_drug": "Warfarin",
+        "severity": "Moderate",
+        "effect": "May alter gut flora and prolong bleeding time."
+      },
+      {
+        "interacting_drug": "Allopurinol",
+        "severity": "Moderate",
+        "effect": "Substantially increases incidence of skin rash."
+      }
+    ],
+    "allergy_risks": [
+      "Penicillin allergy cross-reactivity with ampicillin, piperacillin, and partial with cephalosporins."
+    ],
+    "pregnancy_breastfeeding": "Category B / Generally safe under prescription when clinically indicated.",
+    "jurisdiction": "US FDA Prescription / CDSCO India Schedule H1 (Strict Prescription Antibiotic)",
+    "source_org": "US FDA / DailyMed / CDSCO",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=amoxicillin-oral",
+    "label_revision_date": "2025-09-10"
+  },
+  {
+    "generic_name": "Omeprazole",
+    "brand_names": [
+      "Prilosec",
+      "Omez",
+      "Losec"
+    ],
+    "active_ingredients": [
+      "Omeprazole magnesium"
+    ],
+    "drug_class": "Proton Pump Inhibitor (PPI)",
+    "labeled_indications": [
+      "GERD",
+      "Peptic ulcer disease",
+      "Frequent heartburn",
+      "Zollinger-Ellison syndrome"
+    ],
+    "contraindications": [
+      "Known hypersensitivity to omeprazole or substituted benzimidazoles",
+      "Concomitant administration with rilpivirine-containing products"
+    ],
+    "warnings_and_precautions": [
+      "Long-term use may cause hypomagnesemia, vitamin B12 deficiency, and bone fractures.",
+      "Increased risk of Clostridioides difficile colitis.",
+      "May mask symptoms of gastric malignancy."
+    ],
+    "common_side_effects": [
+      "Headache",
+      "Abdominal pain",
+      "Nausea",
+      "Diarrhea",
+      "Flatulence"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Clopidogrel",
+        "severity": "Major",
+        "effect": "Inhibits CYP2C19 activation of clopidogrel, reducing antiplatelet protection."
+      },
+      {
+        "interacting_drug": "Methotrexate",
+        "severity": "Moderate",
+        "effect": "Elevates and prolongs methotrexate serum levels."
+      },
+      {
+        "interacting_drug": "Ketoconazole / Iron",
+        "severity": "Moderate",
+        "effect": "Decreases absorption of medications requiring acidic gastric pH."
+      }
+    ],
+    "allergy_risks": [
+      "Anaphylaxis or acute interstitial nephritis in rare sensitized individuals."
+    ],
+    "pregnancy_breastfeeding": "Category C / Consult physician before use.",
+    "jurisdiction": "US FDA OTC & Rx / CDSCO India Schedule H",
+    "source_org": "US FDA / DailyMed",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=omeprazole-oral-capsule",
+    "label_revision_date": "2025-10-05"
+  },
+  {
+    "generic_name": "Cetirizine",
+    "brand_names": [
+      "Zyrtec",
+      "Cetzine",
+      "Alerid"
+    ],
+    "active_ingredients": [
+      "Cetirizine hydrochloride"
+    ],
+    "drug_class": "Second-generation Antihistamine",
+    "labeled_indications": [
+      "Allergy",
+      "Allergic rhinitis",
+      "Continuous sneezing",
+      "Chronic urticaria",
+      "Itching",
+      "Watering from eyes"
+    ],
+    "contraindications": [
+      "Known hypersensitivity to cetirizine or hydroxyzine",
+      "End-stage renal disease (CrCl < 10 mL/min)"
+    ],
+    "warnings_and_precautions": [
+      "May cause somnolence; exercise caution when driving or operating machinery.",
+      "Avoid alcohol and other CNS depressants concurrent use.",
+      "Dose adjustment required in renal or hepatic impairment."
+    ],
+    "common_side_effects": [
+      "Somnolence",
+      "Dry mouth",
+      "Fatigue",
+      "Dizziness",
+      "Pharyngitis"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Alcohol",
+        "severity": "Moderate",
+        "effect": "Additive CNS impairment and psychomotor slowdown."
+      },
+      {
+        "interacting_drug": "CNS Depressants (Zolpidem, Lorazepam)",
+        "severity": "Moderate",
+        "effect": "Severe drowsiness and sedation risk."
+      }
+    ],
+    "allergy_risks": [
+      "Hypersensitivity to piperazine derivatives."
+    ],
+    "pregnancy_breastfeeding": "Category B / Excreted in human milk; use with clinical guidance.",
+    "jurisdiction": "US FDA OTC / CDSCO India OTC / Schedule H",
+    "source_org": "US FDA / DailyMed",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cetirizine-hydrochloride",
+    "label_revision_date": "2025-08-14"
+  },
+  {
+    "generic_name": "Metformin",
+    "brand_names": [
+      "Glucophage",
+      "Glycomet",
+      "Riomet"
+    ],
+    "active_ingredients": [
+      "Metformin hydrochloride"
+    ],
+    "drug_class": "Biguanide Antihyperglycemic",
+    "labeled_indications": [
+      "Type 2 Diabetes mellitus",
+      "Gestational diabetes (off-label)",
+      "Prediabetes"
+    ],
+    "contraindications": [
+      "Severe renal impairment (eGFR < 30 mL/min/1.73 m2)",
+      "Acute or chronic metabolic acidosis, including diabetic ketoacidosis",
+      "Severe hypoxemia, sepsis, or acute myocardial infarction"
+    ],
+    "warnings_and_precautions": [
+      "Boxed Warning: Lactic acidosis is a rare but life-threatening complication.",
+      "Temporarily withhold prior to iodinated contrast radiological procedures.",
+      "Risk of Vitamin B12 deficiency with prolonged administration."
+    ],
+    "common_side_effects": [
+      "Diarrhea",
+      "Nausea",
+      "Vomiting",
+      "Abdominal bloating",
+      "Metallic taste"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Iodinated Radiocontrast",
+        "severity": "Severe",
+        "effect": "High risk of acute contrast-induced nephropathy leading to fatal lactic acidosis."
+      },
+      {
+        "interacting_drug": "Alcohol",
+        "severity": "Major",
+        "effect": "Potentiates risk of lactic acidosis and hypoglycemia."
+      },
+      {
+        "interacting_drug": "Furosemide",
+        "severity": "Moderate",
+        "effect": "Increases metformin plasma concentration."
+      }
+    ],
+    "allergy_risks": [
+      "Rare hypersensitivity reactions."
+    ],
+    "pregnancy_breastfeeding": "Category B / Requires medical management for glycemic targets.",
+    "jurisdiction": "US FDA Prescription / CDSCO India Schedule H",
+    "source_org": "US FDA / DailyMed / CDSCO",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=metformin-hydrochloride-tablet",
+    "label_revision_date": "2025-12-01"
+  },
+  {
+    "generic_name": "Salbutamol (Albuterol)",
+    "brand_names": [
+      "Ventolin",
+      "ProAir",
+      "Asthalin"
+    ],
+    "active_ingredients": [
+      "Albuterol sulfate"
+    ],
+    "drug_class": "Short-Acting Beta-2 Adrenergic Agonist (SABA)",
+    "labeled_indications": [
+      "Bronchial Asthma bronchospasm relief",
+      "Exercise-induced bronchospasm",
+      "COPD acute exacerbation"
+    ],
+    "contraindications": [
+      "Hypersensitivity to albuterol or severe milk protein allergy (in dry powder inhalers)"
+    ],
+    "warnings_and_precautions": [
+      "Paradoxical bronchospasm can occur and may be life-threatening.",
+      "Cardiovascular effects: tachycardia, palpitations, hypertension.",
+      "Excessive use can lead to hypokalemia and fatal cardiac events."
+    ],
+    "common_side_effects": [
+      "Tremor",
+      "Nervousness",
+      "Palpitations",
+      "Tachycardia",
+      "Headache"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Propranolol / Non-selective Beta Blockers",
+        "severity": "Severe",
+        "effect": "Severe antagonism producing refractory bronchospasm."
+      },
+      {
+        "interacting_drug": "Diuretics (Furosemide, Thiazides)",
+        "severity": "Moderate",
+        "effect": "Potentiates electrocardiographic and hypokalemic changes."
+      },
+      {
+        "interacting_drug": "MAO Inhibitors",
+        "severity": "Major",
+        "effect": "Heightened cardiovascular toxicity."
+      }
+    ],
+    "allergy_risks": [
+      "Anaphylactoid reactions and oropharyngeal edema."
+    ],
+    "pregnancy_breastfeeding": "Category C / Inhaled rescue therapy essential during acute exacerbations.",
+    "jurisdiction": "US FDA Prescription / CDSCO India Schedule H",
+    "source_org": "US FDA / DailyMed / CDSCO",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=albuterol-sulfate-inhalation",
+    "label_revision_date": "2025-07-25"
+  },
+  {
+    "generic_name": "Atorvastatin",
+    "brand_names": [
+      "Lipitor",
+      "Atorva",
+      "Storvas"
+    ],
+    "active_ingredients": [
+      "Atorvastatin calcium"
+    ],
+    "drug_class": "HMG-CoA Reductase Inhibitor (Statin)",
+    "labeled_indications": [
+      "Hypercholesterolemia",
+      "Cardiovascular event reduction",
+      "Hypertension with dyslipidemia"
+    ],
+    "contraindications": [
+      "Active liver disease or unexplained persistent transaminase elevations",
+      "Pregnancy or nursing mothers"
+    ],
+    "warnings_and_precautions": [
+      "Myopathy and rhabdomyolysis: unexplained muscle pain, tenderness, or weakness.",
+      "Hepatic transaminase elevation; monitor baseline liver function tests.",
+      "Modest elevation in HbA1c and fasting blood sugar levels."
+    ],
+    "common_side_effects": [
+      "Myalgia",
+      "Diarrhea",
+      "Arthralgia",
+      "Nasopharyngitis",
+      "Dyspepsia"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Clarithromycin / Strong CYP3A4 inhibitors",
+        "severity": "Major",
+        "effect": "Substantially increases atorvastatin levels and rhabdomyolysis risk."
+      },
+      {
+        "interacting_drug": "Gemfibrozil",
+        "severity": "Major",
+        "effect": "Marked increase in severe skeletal muscle toxicity."
+      },
+      {
+        "interacting_drug": "Grapefruit juice (>1.2 L/day)",
+        "severity": "Moderate",
+        "effect": "Elevates atorvastatin plasma concentrations."
+      }
+    ],
+    "allergy_risks": [
+      "Rare hypersensitivity with angioedema or rash."
+    ],
+    "pregnancy_breastfeeding": "Contraindicated in pregnancy and lactation due to fetal cholesterol synthesis disruption.",
+    "jurisdiction": "US FDA Prescription / CDSCO India Schedule H",
+    "source_org": "US FDA / DailyMed",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=atorvastatin-calcium-oral",
+    "label_revision_date": "2025-06-30"
+  },
+  {
+    "generic_name": "Azithromycin",
+    "brand_names": [
+      "Zithromax",
+      "Azithral",
+      "Z-Pak"
+    ],
+    "active_ingredients": [
+      "Azithromycin dihydrate"
+    ],
+    "drug_class": "Macrolide Antibiotic",
+    "labeled_indications": [
+      "Community-acquired bacterial pneumonia",
+      "Acute bacterial sinusitis",
+      "Typhoid",
+      "Chlamydia trachomatis infections",
+      "Skin structure infections"
+    ],
+    "contraindications": [
+      "Hypersensitivity to azithromycin, erythromycin, or macrolide/ketolide class",
+      "History of cholestatic jaundice or hepatic dysfunction with previous azithromycin use"
+    ],
+    "warnings_and_precautions": [
+      "QT interval prolongation and risk of torsades de pointes ventricular arrhythmia.",
+      "Hepatotoxicity and rare acute liver failure.",
+      "Clostridioides difficile-associated diarrhea (CDAD)."
+    ],
+    "common_side_effects": [
+      "Diarrhea",
+      "Nausea",
+      "Abdominal pain",
+      "Vomiting",
+      "Headache"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Amiodarone / QT prolonging agents",
+        "severity": "Severe",
+        "effect": "Synergistic prolongation of QTc and fatal ventricular arrhythmia risk."
+      },
+      {
+        "interacting_drug": "Warfarin",
+        "severity": "Moderate",
+        "effect": "May enhance anticoagulant effect; monitor prothrombin time."
+      },
+      {
+        "interacting_drug": "Digoxin",
+        "severity": "Moderate",
+        "effect": "Increases serum digoxin levels through P-gp inhibition."
+      }
+    ],
+    "allergy_risks": [
+      "Macrolide cross-reactivity, severe cutaneous reactions (DRESS syndrome)."
+    ],
+    "pregnancy_breastfeeding": "Category B / Use under medical supervision.",
+    "jurisdiction": "US FDA Prescription / CDSCO India Schedule H1",
+    "source_org": "US FDA / DailyMed / CDSCO",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=azithromycin-oral-tablet",
+    "label_revision_date": "2025-08-20"
+  },
+  {
+    "generic_name": "Warfarin",
+    "brand_names": [
+      "Coumadin",
+      "Jantoven",
+      "Warf"
+    ],
+    "active_ingredients": [
+      "Warfarin sodium"
+    ],
+    "drug_class": "Vitamin K Antagonist Anticoagulant",
+    "labeled_indications": [
+      "Venous thromboembolism prophylaxis and treatment",
+      "Atrial fibrillation stroke prevention",
+      "Mechanical prosthetic heart valve thromboembolism prevention"
+    ],
+    "contraindications": [
+      "Active pathological bleeding or hemorrhagic tendencies",
+      "Pregnancy (except women with mechanical heart valves under high risk)",
+      "Recent brain, eye, or spinal cord surgery"
+    ],
+    "warnings_and_precautions": [
+      "Boxed Warning: Can cause major, fatal bleeding. Regular INR monitoring required.",
+      "Tissue necrosis and gangrene in protein C or S deficiency.",
+      "Extreme dietary Vitamin K variability impacts INR stability."
+    ],
+    "common_side_effects": [
+      "Bleeding",
+      "Bruising",
+      "Nausea",
+      "Abdominal cramps"
+    ],
+    "drug_interactions": [
+      {
+        "interacting_drug": "Aspirin / NSAIDs (Ibuprofen)",
+        "severity": "Severe",
+        "effect": "Extreme synergistic risk of fatal GI hemorrhage."
+      },
+      {
+        "interacting_drug": "Paracetamol / Acetaminophen (regular)",
+        "severity": "Moderate",
+        "effect": "Increases INR and hypoprothrombinemic response."
+      },
+      {
+        "interacting_drug": "Ciprofloxacin / Antibiotics",
+        "severity": "Major",
+        "effect": "Suppresses vitamin K synthesizing flora, precipitating severe bleeding."
+      }
+    ],
+    "allergy_risks": [
+      "Rare hypersensitivity, skin necrosis."
+    ],
+    "pregnancy_breastfeeding": "Contraindicated in pregnancy (teratogenic fetal warfarin syndrome).",
+    "jurisdiction": "US FDA Prescription / CDSCO India Schedule H",
+    "source_org": "US FDA / DailyMed / CDSCO",
+    "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=warfarin-sodium-tablet",
+    "label_revision_date": "2026-02-10"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "overall_status": "PASS",
+  "symptom_validation": {
+    "dataset_name": "Processed Disease Symptoms",
+    "validation_status": "PASS",
+    "total_cases": 4920,
+    "feature_count": 131,
+    "target_column": "prognosis",
+    "num_classes": 41,
+    "min_cases_per_class": 120,
+    "max_cases_per_class": 120,
+    "class_imbalance_ratio": 1.0,
+    "null_value_count": 0,
+    "zero_symptom_cases": 0,
+    "issues_detected": []
+  },
+  "medicine_validation": {
+    "dataset_name": "Processed Medicine Database",
+    "validation_status": "PASS",
+    "total_records": 10,
+    "verified_with_citations": 10,
+    "total_issues": 0,
+    "issues_detected": []
+  }
+}

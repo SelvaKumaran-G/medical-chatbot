@@ -1,0 +1,62 @@
+[
+  {
+    "model_name": "Logistic Regression",
+    "accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "precision_macro": 1.0,
+    "recall_macro": 1.0,
+    "macro_f1": 1.0,
+    "weighted_f1": 1.0,
+    "top_3_accuracy": 1.0,
+    "latency_ms_per_sample": 0.087,
+    "training_time_sec": 0.13
+  },
+  {
+    "model_name": "Multinomial Naive Bayes",
+    "accuracy": 0.9973,
+    "balanced_accuracy": 0.9973,
+    "precision_macro": 0.9974,
+    "recall_macro": 0.9973,
+    "macro_f1": 0.9973,
+    "weighted_f1": 0.9973,
+    "top_3_accuracy": 1.0,
+    "latency_ms_per_sample": 0.085,
+    "training_time_sec": 0.02
+  },
+  {
+    "model_name": "Random Forest",
+    "accuracy": 0.9986,
+    "balanced_accuracy": 0.9986,
+    "precision_macro": 0.9987,
+    "recall_macro": 0.9986,
+    "macro_f1": 0.9986,
+    "weighted_f1": 0.9986,
+    "top_3_accuracy": 1.0,
+    "latency_ms_per_sample": 2.574,
+    "training_time_sec": 0.17
+  },
+  {
+    "model_name": "Support Vector Machine",
+    "accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "precision_macro": 1.0,
+    "recall_macro": 1.0,
+    "macro_f1": 1.0,
+    "weighted_f1": 1.0,
+    "top_3_accuracy": 1.0,
+    "latency_ms_per_sample": 6.067,
+    "training_time_sec": 0.35
+  },
+  {
+    "model_name": "XGBoost",
+    "accuracy": 0.9946,
+    "balanced_accuracy": 0.9946,
+    "precision_macro": 0.9946,
+    "recall_macro": 0.9946,
+    "macro_f1": 0.9945,
+    "weighted_f1": 0.9945,
+    "top_3_accuracy": 1.0,
+    "latency_ms_per_sample": 0.361,
+    "training_time_sec": 0.0
+  }
+]

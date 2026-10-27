@@ -1,0 +1,6 @@
+model_name,accuracy,balanced_accuracy,precision_macro,recall_macro,macro_f1,weighted_f1,top_3_accuracy,latency_ms_per_sample,training_time_sec
+Logistic Regression,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.087,0.13
+Multinomial Naive Bayes,0.9973,0.9973,0.9974,0.9973,0.9973,0.9973,1.0,0.085,0.02
+Random Forest,0.9986,0.9986,0.9987,0.9986,0.9986,0.9986,1.0,2.574,0.17
+Support Vector Machine,1.0,1.0,1.0,1.0,1.0,1.0,1.0,6.067,0.35
+XGBoost,0.9946,0.9946,0.9946,0.9946,0.9945,0.9945,1.0,0.361,0.0

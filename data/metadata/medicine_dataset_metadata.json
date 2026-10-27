@@ -1,0 +1,22 @@
+{
+  "dataset_name": "Verified Medicine Knowledge Base (FDA DailyMed & CDSCO)",
+  "file_path": "D:\\medical chatbot\\data\\raw\\raw_medicine_database.json",
+  "record_count": 10,
+  "retrieval_date": "2026-10-26 06:59:40 UTC",
+  "sources": [
+    {
+      "name": "US FDA / DailyMed",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/"
+    },
+    {
+      "name": "openFDA API",
+      "url": "https://open.fda.gov/apis/drug/label/"
+    },
+    {
+      "name": "CDSCO India NLEM",
+      "url": "https://cdscoonline.gov.in/CDSCO/"
+    }
+  ],
+  "license": "Public Domain (US Gov) & Open Data India",
+  "limitations": "Provides verified drug labeling facts. Does NOT generate individualized prescriptions."
+}
