@@ -93,3 +93,28 @@ def test_static_js_served():
 def test_cors_headers_present():
     status, headers, body = call_wsgi("/api/health")
     assert headers.get("Access-Control-Allow-Origin") == "*"
+
+def test_api_metadata():
+    status, headers, body = call_wsgi("/api/metadata")
+    assert status == "200 OK"
+    data = json.loads(body.decode("utf-8"))
+    assert data["held_out_accuracy"] == 1.0
+    assert data["num_classes"] == 41
+
+def test_api_predict_rich_fields():
+    payload = {
+        "text": "I have high fever and shivering chills with headache",
+        "patient_profile": {
+            "name": "Rahul",
+            "age": 30,
+            "preexisting_conditions": ["Type 2 Diabetes"]
+        }
+    }
+    status, headers, body = call_wsgi("/api/predict", method="POST", body_dict=payload)
+    assert status == "200 OK"
+    data = json.loads(body.decode("utf-8"))
+    assert "symptom_explanations" in data
+    assert len(data["symptom_explanations"]) > 0
+    assert "symptom_match" in data
+    assert "reference_tablets" in data
+    assert len(data["reference_tablets"]) > 0

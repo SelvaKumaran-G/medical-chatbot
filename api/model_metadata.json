@@ -1,0 +1,12 @@
+{
+  "model_architecture": "Logistic Regression",
+  "held_out_accuracy": 1.0,
+  "held_out_macro_f1": 1.0,
+  "held_out_top_3_accuracy": 1.0,
+  "inference_latency_ms": 0.087,
+  "num_features": 131,
+  "num_classes": 41,
+  "artifact_file": "best_model_pipeline.joblib",
+  "evaluated_date": "2026-10-27 04:50:24 UTC",
+  "evaluation_split_method": "Stratified 70/15/15 held-out test split"
+}
