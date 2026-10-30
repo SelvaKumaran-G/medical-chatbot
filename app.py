@@ -1,27 +1,20 @@
 """
 MediGuide AI — Multi-Platform Entrypoint
-Supports Vercel Serverless Functions, WSGI/ASGI servers, and local/Cloud Streamlit.
+Supports local Streamlit UI, local HTTP development server, and WSGI runners.
 """
 
 import os
 import sys
 
-# ---------------------------------------------------------------------------
-# 1. Vercel & WSGI Deployment Entrypoints
-# Export 'app' and 'handler' callable for Vercel Serverless Runtime
-# ---------------------------------------------------------------------------
+# WSGI & Serverless Callable (proxies to api.index)
 try:
     from api.index import app, handler
 except Exception:
     def app(environ, start_response):
-        start_response("200 OK", [("Content-Type", "application/json")])
-        return [b'{"status": "ok", "app": "MediGuide AI"}']
+        start_response("200 OK", [("Content-Type", "text/plain")])
+        return [b"MediGuide AI"]
     handler = app
 
-# ---------------------------------------------------------------------------
-# 2. Streamlit Runtime Execution
-# Only runs Streamlit UI when invoked via 'streamlit run app.py'
-# ---------------------------------------------------------------------------
 def _is_streamlit_running():
     try:
         from streamlit.runtime.scriptrunner_utils.script_run_context import get_script_run_ctx
@@ -34,3 +27,11 @@ if _is_streamlit_running():
     _target = os.path.join(os.path.dirname(os.path.abspath(__file__)), "streamlit_app.py")
     if os.path.exists(_target):
         runpy.run_path(_target, run_name="__main__")
+
+if __name__ == "__main__":
+    from dev_server import DevHandler, HTTPServer
+    port = int(os.environ.get("PORT", 3000))
+    server_address = ("", port)
+    httpd = HTTPServer(server_address, DevHandler)
+    print(f"MediGuide AI server running on http://localhost:{port}")
+    httpd.serve_forever()

@@ -140,13 +140,26 @@ AGE_SAFETY_RULES: Dict[str, List[Dict[str, Any]]] = {
 class MedicineSafetyChecker:
     def __init__(self, data_path: Optional[str] = None):
         if data_path is None:
-            data_path = MEDICINES_PATH
+            candidates = [
+                MEDICINES_PATH,
+                os.path.join(os.path.dirname(os.path.dirname(__file__)), "api", "medicines.json"),
+                os.path.join(os.path.dirname(os.path.dirname(__file__)), "public", "medicines.json"),
+                os.path.join(os.path.dirname(__file__), "..", "medicines.json"),
+                "medicines.json",
+                "public/medicines.json"
+            ]
+            for c in candidates:
+                if os.path.exists(c):
+                    data_path = c
+                    break
+            if data_path is None:
+                data_path = MEDICINES_PATH
             
-        if not os.path.exists(data_path):
-            raise FileNotFoundError(f"Cleaned medicines database not found at {data_path}")
-            
-        with open(data_path, "r", encoding="utf-8") as f:
-            self.medicines: List[Dict[str, Any]] = json.load(f)
+        if os.path.exists(data_path):
+            with open(data_path, "r", encoding="utf-8") as f:
+                self.medicines: List[Dict[str, Any]] = json.load(f)
+        else:
+            self.medicines = []
             
         self.med_by_name = {}
         for m in self.medicines:

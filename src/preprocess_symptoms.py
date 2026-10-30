@@ -8,7 +8,6 @@ import os
 import re
 import json
 import logging
-import pandas as pd
 from typing import List, Dict, Set, Tuple, Any
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -16,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 RAW_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "raw")
 PROCESSED_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "processed")
-os.makedirs(PROCESSED_DATA_DIR, exist_ok=True)
 
 # Comprehensive synonym dictionary mapping colloquial expressions to canonical tokens
 SYMPTOM_SYNONYM_MAP: Dict[str, str] = {
@@ -241,7 +239,7 @@ def extract_symptoms_from_text(user_text: str) -> Dict[str, Any]:
         "symptom_count": len(extracted_symptoms)
     }
 
-def preprocess_symptom_dataset(raw_csv_path: str = None) -> Tuple[pd.DataFrame, List[str], str]:
+def preprocess_symptom_dataset(raw_csv_path: str = None) -> Tuple[Any, List[str], str]:
     """
     Cleans raw symptoms dataset:
     - Normalizes column names
@@ -249,6 +247,8 @@ def preprocess_symptom_dataset(raw_csv_path: str = None) -> Tuple[pd.DataFrame, 
     - Deduplicates without losing case diversity
     - Generates processed dataset and vocabulary
     """
+    import pandas as pd
+    os.makedirs(PROCESSED_DATA_DIR, exist_ok=True)
     if raw_csv_path is None:
         raw_csv_path = os.path.join(RAW_DATA_DIR, "raw_disease_symptoms.csv")
         

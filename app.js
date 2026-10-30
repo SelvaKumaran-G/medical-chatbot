@@ -215,6 +215,14 @@ function initSymptomInput() {
     checkEmergencyInstant(textarea.value);
   });
 
+  // Keyboard shortcut: Ctrl+Enter / Cmd+Enter to analyze
+  textarea.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      runSymptomAnalysis();
+    }
+  });
+
   // Quick symptom chips
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
@@ -445,7 +453,19 @@ function renderPredictionResults(data) {
     followUpCard.style.display = 'block';
     data.follow_up_questions.forEach(q => {
       const li = document.createElement('li');
-      li.textContent = q;
+      li.className = 'follow-up-item-interactive';
+      li.style.cursor = 'pointer';
+      li.title = 'Click to add this follow-up detail to your description';
+      li.textContent = q + ' 💬';
+      li.addEventListener('click', () => {
+        const textarea = document.getElementById('symptom-input');
+        if (textarea) {
+          const current = textarea.value.trim();
+          textarea.value = current ? current + '\n• Note on "' + q + '": ' : 'Note on "' + q + '": ';
+          textarea.focus();
+          textarea.dispatchEvent(new Event('input'));
+        }
+      });
       followUpList.appendChild(li);
     });
   } else {

@@ -20,19 +20,38 @@ SEARCH_INDEX_PATH = os.path.join(PROCESSED_DATA_DIR, "medicine_search_index.json
 class MedicineRetriever:
     def __init__(self, data_path: Optional[str] = None):
         if data_path is None:
-            data_path = MEDICINES_PATH
+            candidates = [
+                MEDICINES_PATH,
+                os.path.join(os.path.dirname(os.path.dirname(__file__)), "api", "medicines.json"),
+                os.path.join(os.path.dirname(os.path.dirname(__file__)), "public", "medicines.json"),
+                os.path.join(os.path.dirname(__file__), "..", "medicines.json"),
+                "medicines.json",
+                "public/medicines.json"
+            ]
+            for c in candidates:
+                if os.path.exists(c):
+                    data_path = c
+                    break
+            if data_path is None:
+                data_path = MEDICINES_PATH
             
-        if not os.path.exists(data_path):
-            raise FileNotFoundError(
-                f"Cleaned medicines not found at {data_path}. Run preprocess_medicines.py first."
-            )
+        if os.path.exists(data_path):
+            with open(data_path, "r", encoding="utf-8") as f:
+                self.medicines: List[Dict[str, Any]] = json.load(f)
+        else:
+            self.medicines = []
             
-        with open(data_path, "r", encoding="utf-8") as f:
-            self.medicines: List[Dict[str, Any]] = json.load(f)
-            
-        if os.path.exists(SEARCH_INDEX_PATH):
-            with open(SEARCH_INDEX_PATH, "r", encoding="utf-8") as f:
-                self.index = json.load(f)
+        index_candidates = [
+            SEARCH_INDEX_PATH,
+            os.path.join(os.path.dirname(os.path.dirname(__file__)), "api", "medicine_search_index.json"),
+            "medicine_search_index.json"
+        ]
+        self.index = {}
+        for ic in index_candidates:
+            if os.path.exists(ic):
+                with open(ic, "r", encoding="utf-8") as f:
+                    self.index = json.load(f)
+                break
         else:
             self.index = {}
             

@@ -1,0 +1,381 @@
+{
+  "name_to_index": {
+    "paracetamol (acetaminophen)": 0,
+    "paracetamol": 0,
+    "tylenol": 0,
+    "calpol": 0,
+    "dolo 650": 0,
+    "panadol": 0,
+    "crocin": 0,
+    "acetaminophen": 0,
+    "ibuprofen": 1,
+    "advil": 1,
+    "motrin": 1,
+    "brufen": 1,
+    "nurofen": 1,
+    "amoxicillin": 2,
+    "amoxil": 2,
+    "mox": 2,
+    "novamox": 2,
+    "amoxicillin trihydrate": 2,
+    "omeprazole": 3,
+    "prilosec": 3,
+    "omez": 3,
+    "losec": 3,
+    "omeprazole magnesium": 3,
+    "cetirizine": 4,
+    "zyrtec": 4,
+    "cetzine": 4,
+    "alerid": 4,
+    "cetirizine hydrochloride": 4,
+    "metformin": 5,
+    "glucophage": 5,
+    "glycomet": 5,
+    "riomet": 5,
+    "metformin hydrochloride": 5,
+    "salbutamol (albuterol)": 6,
+    "salbutamol": 6,
+    "ventolin": 6,
+    "proair": 6,
+    "asthalin": 6,
+    "albuterol sulfate": 6,
+    "atorvastatin": 7,
+    "lipitor": 7,
+    "atorva": 7,
+    "storvas": 7,
+    "atorvastatin calcium": 7,
+    "azithromycin": 8,
+    "zithromax": 8,
+    "azithral": 8,
+    "z-pak": 8,
+    "azithromycin dihydrate": 8,
+    "warfarin": 9,
+    "coumadin": 9,
+    "jantoven": 9,
+    "warf": 9,
+    "warfarin sodium": 9
+  },
+  "indication_index": {
+    "fever": [
+      0,
+      1
+    ],
+    "mild to moderate pain": [
+      0,
+      1
+    ],
+    "headache": [
+      0
+    ],
+    "common cold": [
+      0
+    ],
+    "influenza": [
+      0
+    ],
+    "muscle pain": [
+      0
+    ],
+    "toothache": [
+      0
+    ],
+    "arthritis": [
+      0,
+      1
+    ],
+    "osteoarthritis": [
+      1
+    ],
+    "dysmenorrhea": [
+      1
+    ],
+    "joint pain": [
+      1
+    ],
+    "migraine": [
+      1
+    ],
+    "bacterial pneumonia": [
+      2
+    ],
+    "urinary tract infection": [
+      2
+    ],
+    "ear, nose, and throat infections": [
+      2
+    ],
+    "skin infections": [
+      2
+    ],
+    "impetigo": [
+      2
+    ],
+    "typhoid (selected susceptible strains)": [
+      2
+    ],
+    "gerd": [
+      3
+    ],
+    "peptic ulcer disease": [
+      3
+    ],
+    "frequent heartburn": [
+      3
+    ],
+    "zollinger-ellison syndrome": [
+      3
+    ],
+    "allergy": [
+      4
+    ],
+    "allergic rhinitis": [
+      4
+    ],
+    "continuous sneezing": [
+      4
+    ],
+    "chronic urticaria": [
+      4
+    ],
+    "itching": [
+      4
+    ],
+    "watering from eyes": [
+      4
+    ],
+    "type 2 diabetes mellitus": [
+      5
+    ],
+    "gestational diabetes (off-label)": [
+      5
+    ],
+    "prediabetes": [
+      5
+    ],
+    "bronchial asthma bronchospasm relief": [
+      6
+    ],
+    "exercise-induced bronchospasm": [
+      6
+    ],
+    "copd acute exacerbation": [
+      6
+    ],
+    "hypercholesterolemia": [
+      7
+    ],
+    "cardiovascular event reduction": [
+      7
+    ],
+    "hypertension with dyslipidemia": [
+      7
+    ],
+    "community-acquired bacterial pneumonia": [
+      8
+    ],
+    "acute bacterial sinusitis": [
+      8
+    ],
+    "typhoid": [
+      8
+    ],
+    "chlamydia trachomatis infections": [
+      8
+    ],
+    "skin structure infections": [
+      8
+    ],
+    "venous thromboembolism prophylaxis and treatment": [
+      9
+    ],
+    "atrial fibrillation stroke prevention": [
+      9
+    ],
+    "mechanical prosthetic heart valve thromboembolism prevention": [
+      9
+    ]
+  },
+  "interaction_pairs": [
+    {
+      "drug_a": "Paracetamol (Acetaminophen)",
+      "drug_b": "Warfarin",
+      "severity": "Moderate",
+      "clinical_effect": "May prolong INR and increase bleeding risk with prolonged use."
+    },
+    {
+      "drug_a": "Paracetamol (Acetaminophen)",
+      "drug_b": "Alcohol",
+      "severity": "Severe",
+      "clinical_effect": "Potentiates hepatotoxicity risk."
+    },
+    {
+      "drug_a": "Paracetamol (Acetaminophen)",
+      "drug_b": "Isoniazid",
+      "severity": "Moderate",
+      "clinical_effect": "Increases risk of liver injury."
+    },
+    {
+      "drug_a": "Ibuprofen",
+      "drug_b": "Warfarin",
+      "severity": "Severe",
+      "clinical_effect": "Synergistic increase in major gastrointestinal bleeding risk."
+    },
+    {
+      "drug_a": "Ibuprofen",
+      "drug_b": "Aspirin",
+      "severity": "Major",
+      "clinical_effect": "Compromises cardioprotective antiplatelet effect of low-dose aspirin and increases GI ulcers."
+    },
+    {
+      "drug_a": "Ibuprofen",
+      "drug_b": "Lisinopril / ACE inhibitors",
+      "severity": "Moderate",
+      "clinical_effect": "Blunts antihypertensive efficacy and increases acute kidney injury risk."
+    },
+    {
+      "drug_a": "Ibuprofen",
+      "drug_b": "Lithium",
+      "severity": "Major",
+      "clinical_effect": "Reduces renal lithium clearance causing severe toxicity."
+    },
+    {
+      "drug_a": "Amoxicillin",
+      "drug_b": "Methotrexate",
+      "severity": "Severe",
+      "clinical_effect": "Decreases methotrexate renal clearance, raising toxicity risk."
+    },
+    {
+      "drug_a": "Amoxicillin",
+      "drug_b": "Warfarin",
+      "severity": "Moderate",
+      "clinical_effect": "May alter gut flora and prolong bleeding time."
+    },
+    {
+      "drug_a": "Amoxicillin",
+      "drug_b": "Allopurinol",
+      "severity": "Moderate",
+      "clinical_effect": "Substantially increases incidence of skin rash."
+    },
+    {
+      "drug_a": "Omeprazole",
+      "drug_b": "Clopidogrel",
+      "severity": "Major",
+      "clinical_effect": "Inhibits CYP2C19 activation of clopidogrel, reducing antiplatelet protection."
+    },
+    {
+      "drug_a": "Omeprazole",
+      "drug_b": "Methotrexate",
+      "severity": "Moderate",
+      "clinical_effect": "Elevates and prolongs methotrexate serum levels."
+    },
+    {
+      "drug_a": "Omeprazole",
+      "drug_b": "Ketoconazole / Iron",
+      "severity": "Moderate",
+      "clinical_effect": "Decreases absorption of medications requiring acidic gastric pH."
+    },
+    {
+      "drug_a": "Cetirizine",
+      "drug_b": "Alcohol",
+      "severity": "Moderate",
+      "clinical_effect": "Additive CNS impairment and psychomotor slowdown."
+    },
+    {
+      "drug_a": "Cetirizine",
+      "drug_b": "CNS Depressants (Zolpidem, Lorazepam)",
+      "severity": "Moderate",
+      "clinical_effect": "Severe drowsiness and sedation risk."
+    },
+    {
+      "drug_a": "Metformin",
+      "drug_b": "Iodinated Radiocontrast",
+      "severity": "Severe",
+      "clinical_effect": "High risk of acute contrast-induced nephropathy leading to fatal lactic acidosis."
+    },
+    {
+      "drug_a": "Metformin",
+      "drug_b": "Alcohol",
+      "severity": "Major",
+      "clinical_effect": "Potentiates risk of lactic acidosis and hypoglycemia."
+    },
+    {
+      "drug_a": "Metformin",
+      "drug_b": "Furosemide",
+      "severity": "Moderate",
+      "clinical_effect": "Increases metformin plasma concentration."
+    },
+    {
+      "drug_a": "Salbutamol (Albuterol)",
+      "drug_b": "Propranolol / Non-selective Beta Blockers",
+      "severity": "Severe",
+      "clinical_effect": "Severe antagonism producing refractory bronchospasm."
+    },
+    {
+      "drug_a": "Salbutamol (Albuterol)",
+      "drug_b": "Diuretics (Furosemide, Thiazides)",
+      "severity": "Moderate",
+      "clinical_effect": "Potentiates electrocardiographic and hypokalemic changes."
+    },
+    {
+      "drug_a": "Salbutamol (Albuterol)",
+      "drug_b": "MAO Inhibitors",
+      "severity": "Major",
+      "clinical_effect": "Heightened cardiovascular toxicity."
+    },
+    {
+      "drug_a": "Atorvastatin",
+      "drug_b": "Clarithromycin / Strong CYP3A4 inhibitors",
+      "severity": "Major",
+      "clinical_effect": "Substantially increases atorvastatin levels and rhabdomyolysis risk."
+    },
+    {
+      "drug_a": "Atorvastatin",
+      "drug_b": "Gemfibrozil",
+      "severity": "Major",
+      "clinical_effect": "Marked increase in severe skeletal muscle toxicity."
+    },
+    {
+      "drug_a": "Atorvastatin",
+      "drug_b": "Grapefruit juice (>1.2 L/day)",
+      "severity": "Moderate",
+      "clinical_effect": "Elevates atorvastatin plasma concentrations."
+    },
+    {
+      "drug_a": "Azithromycin",
+      "drug_b": "Amiodarone / QT prolonging agents",
+      "severity": "Severe",
+      "clinical_effect": "Synergistic prolongation of QTc and fatal ventricular arrhythmia risk."
+    },
+    {
+      "drug_a": "Azithromycin",
+      "drug_b": "Warfarin",
+      "severity": "Moderate",
+      "clinical_effect": "May enhance anticoagulant effect; monitor prothrombin time."
+    },
+    {
+      "drug_a": "Azithromycin",
+      "drug_b": "Digoxin",
+      "severity": "Moderate",
+      "clinical_effect": "Increases serum digoxin levels through P-gp inhibition."
+    },
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Aspirin / NSAIDs (Ibuprofen)",
+      "severity": "Severe",
+      "clinical_effect": "Extreme synergistic risk of fatal GI hemorrhage."
+    },
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Paracetamol / Acetaminophen (regular)",
+      "severity": "Moderate",
+      "clinical_effect": "Increases INR and hypoprothrombinemic response."
+    },
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Ciprofloxacin / Antibiotics",
+      "severity": "Major",
+      "clinical_effect": "Suppresses vitamin K synthesizing flora, precipitating severe bleeding."
+    }
+  ],
+  "total_medicines": 10
+}

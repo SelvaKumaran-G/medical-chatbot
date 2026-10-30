@@ -41,5 +41,6 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Scratch
+# Scratch & Scripts
 scratch/
+push_to_github.bat

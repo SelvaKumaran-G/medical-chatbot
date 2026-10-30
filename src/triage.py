@@ -87,9 +87,11 @@ def screen_emergency_red_flags(user_text: str) -> Dict[str, Any]:
             if re.search(pat, clean_input):
                 return {
                     "is_emergency": True,
+                    "emergency_detected": True,
                     "urgency_level": "CRITICAL_RED_FLAG",
                     "category": flag["category"],
                     "emergency_protocol": flag["emergency_guidance"],
+                    "guidance": flag["emergency_guidance"],
                     "action_required": (
                         "Stop self-assessment. Dial 911 / 112 / 102 or proceed immediately to the nearest Emergency Department."
                     )
@@ -97,9 +99,11 @@ def screen_emergency_red_flags(user_text: str) -> Dict[str, Any]:
 
     return {
         "is_emergency": False,
+        "emergency_detected": False,
         "urgency_level": "NON_EMERGENCY_ROUTINE",
         "category": None,
         "emergency_protocol": None,
+        "guidance": "No immediate life-threatening emergency red-flag triggers identified.",
         "action_required": "Proceed with clinical condition estimation and symptom review."
     }
 
