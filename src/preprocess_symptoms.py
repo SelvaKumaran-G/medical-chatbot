@@ -152,7 +152,17 @@ SYMPTOM_SYNONYM_MAP: Dict[str, str] = {
     "racing heart": "fast_heart_rate",
     "swollen legs": "swollen_legs",
     "swelling in joints": "swelling_joints",
-    "blurred vision": "blurred_and_distorted_vision"
+    # Ensure all extended synonyms from api are present
+    "pain in legs": "joint_pain", "pain in leg": "joint_pain", "legs hurt": "joint_pain",
+    "pain in hands": "joint_pain", "hands hurt": "joint_pain",
+    "feeling sick": "malaise", "sick": "malaise", "ill": "malaise", "unwell": "malaise",
+    "tired": "fatigue", "exhausted": "fatigue", "no energy": "fatigue", "drained": "fatigue",
+    "cold": "chills", "feeling cold": "chills", "freezing": "chills",
+    "shiver": "shivering", "shivers": "shivering", "rigors": "shivering",
+    "burning in stomach": "acidity", "throat hurts": "throat_irritation", "sore throat": "throat_irritation",
+    "body pain": "muscle_pain", "aching body": "muscle_pain", "whole body hurts": "muscle_pain",
+    "loose motion": "diarrhoea", "loose motions": "diarrhoea",
+    "itch": "itching", "skin redness": "skin_rash", "red spots on body": "red_spots_over_body"
 }
 
 # Negation prefixes and trigger words
