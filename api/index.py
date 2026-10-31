@@ -828,6 +828,14 @@ def handle_medicines_search(query: str, condition: str = "") -> Dict[str, Any]:
     return {"count": len(results), "medicines": results}
 
 
+try:
+    from api.embedded_static import EMBEDDED_INDEX_HTML, EMBEDDED_STYLE_CSS, EMBEDDED_APP_JS
+except Exception:
+    try:
+        from embedded_static import EMBEDDED_INDEX_HTML, EMBEDDED_STYLE_CSS, EMBEDDED_APP_JS
+    except Exception:
+        EMBEDDED_INDEX_HTML, EMBEDDED_STYLE_CSS, EMBEDDED_APP_JS = "", "", ""
+
 # ---------------------------------------------------------------------------
 # Static File Helper
 # ---------------------------------------------------------------------------
@@ -895,8 +903,27 @@ class handler(BaseHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(content)
-        else:
-            self._send_json_response(404, {"error": f"File not found: {rel_path}"})
+            return
+
+        # Guaranteed embedded fallbacks for Vercel Serverless environment
+        embedded_content = None
+        if rel_path.endswith("index.html") and EMBEDDED_INDEX_HTML:
+            embedded_content = EMBEDDED_INDEX_HTML.encode("utf-8")
+        elif rel_path.endswith("style.css") and EMBEDDED_STYLE_CSS:
+            embedded_content = EMBEDDED_STYLE_CSS.encode("utf-8")
+        elif rel_path.endswith("app.js") and EMBEDDED_APP_JS:
+            embedded_content = EMBEDDED_APP_JS.encode("utf-8")
+
+        if embedded_content is not None:
+            self.send_response(200)
+            self.send_header("Content-Type", _get_content_type(rel_path))
+            self.send_header("Content-Length", str(len(embedded_content)))
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(embedded_content)
+            return
+
+        self._send_json_response(404, {"error": f"File not found: {rel_path}"})
 
     def do_OPTIONS(self):
         self.send_response(204)
