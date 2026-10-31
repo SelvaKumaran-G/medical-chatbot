@@ -7,7 +7,7 @@ import os
 import sys
 import json
 import urllib.parse
-from http.server import HTTPServer
+from http.server import ThreadingHTTPServer
 from api.index import handler as ApiHandler
 
 class DevHandler(ApiHandler):
@@ -23,6 +23,6 @@ class DevHandler(ApiHandler):
 if __name__ == "__main__":
     PORT = 3000
     server_address = ("", PORT)
-    httpd = HTTPServer(server_address, DevHandler)
-    print(f"MediGuide AI local dev server running on http://localhost:{PORT}")
+    httpd = ThreadingHTTPServer(server_address, DevHandler)
+    print(f"MediGuide AI multi-threaded dev server running on http://localhost:{PORT}")
     httpd.serve_forever()

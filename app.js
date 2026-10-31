@@ -582,12 +582,15 @@ async function processUserQuery(text) {
   let data = null;
   const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const isFileProto = window.location.protocol === 'file:';
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 650;
 
-  // Attempt 1: Try relative /api/predict (optimized 1000ms timeout for mobile responsiveness)
-  if (!isFileProto) {
+  // On mobile devices, prioritize instant on-device clinical inference for sub-second response
+  if (isMobile) {
+    data = clientSideClinicalAnalysis(text, state.patientProfile);
+  } else if (!isFileProto) {
     try {
       const ctrl1 = new AbortController();
-      const t1 = setTimeout(() => ctrl1.abort(), 1000);
+      const t1 = setTimeout(() => ctrl1.abort(), 800);
       const res1 = await fetch('/api/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -602,11 +605,11 @@ async function processUserQuery(text) {
       // Relative fetch timed out or offline
     }
 
-    // Attempt 2: Only try localhost:3000 if user is ACTUALLY on desktop localhost (never on mobile!)
+    // Only try localhost:3000 if user is ACTUALLY on desktop localhost (never on mobile!)
     if (!data && isLocalHost && window.location.port !== '3000') {
       try {
         const ctrl2 = new AbortController();
-        const t2 = setTimeout(() => ctrl2.abort(), 600);
+        const t2 = setTimeout(() => ctrl2.abort(), 500);
         const res2 = await fetch('http://localhost:3000/api/predict', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -621,7 +624,7 @@ async function processUserQuery(text) {
     }
   }
 
-  // Attempt 3: Guaranteed instant client-side clinical analysis (executes in 1-2 ms!)
+  // Guaranteed instant client-side clinical analysis fallback
   if (!data) {
     data = clientSideClinicalAnalysis(text, state.patientProfile);
   }
