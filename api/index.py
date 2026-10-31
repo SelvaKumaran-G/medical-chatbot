@@ -832,12 +832,14 @@ def handle_medicines_search(query: str, condition: str = "") -> Dict[str, Any]:
 # Static File Helper
 # ---------------------------------------------------------------------------
 def _find_static_file(filepath: str) -> Optional[str]:
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
     candidates = [
+        os.path.join(cur_dir, filepath),
+        os.path.join(cur_dir, "public", filepath),
+        os.path.join(cur_dir, "..", "public", filepath),
+        os.path.join(cur_dir, "..", filepath),
         os.path.join(BASE_DIR, "public", filepath),
         os.path.join(BASE_DIR, filepath),
-        os.path.join(os.path.dirname(__file__), "..", "public", filepath),
-        os.path.join(os.path.dirname(__file__), "..", filepath),
-        os.path.join(os.path.dirname(__file__), filepath),
         filepath
     ]
     for c in candidates:
@@ -875,7 +877,16 @@ class handler(BaseHTTPRequestHandler):
 
     def _send_file(self, rel_path: str):
         found = _find_static_file(rel_path)
-        if found:
+        if not found:
+            # Fallback search if path was prefixed or in subfolder
+            cur_dir = os.path.dirname(os.path.abspath(__file__))
+            target_name = os.path.basename(rel_path)
+            for root, dirs, files in os.walk(cur_dir):
+                if target_name in files:
+                    found = os.path.join(root, target_name)
+                    break
+
+        if found and os.path.exists(found) and os.path.isfile(found):
             with open(found, "rb") as f:
                 content = f.read()
             self.send_response(200)
@@ -900,7 +911,7 @@ class handler(BaseHTTPRequestHandler):
         query = urllib.parse.parse_qs(parsed.query)
 
         try:
-            if path in ("/api/health", "/api"):
+            if path == "/api/health":
                 self._send_json_response(200, {
                     "name": "MediGuide AI Clinical API",
                     "status": "healthy",
@@ -917,25 +928,28 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json_response(200, {"symptoms": [f.replace("_", " ") for f in features]})
             elif path == "/api/metadata":
                 self._send_json_response(200, handle_metadata_request())
-            # Static file fallbacks
-            elif path in ("", "/", "/index.html"):
+            # Static file fallbacks & SPA routing
+            elif path in ("", "/", "/index.html", "/api", "/api/index.html"):
                 self._send_file("index.html")
-            elif path == "/style.css":
+            elif path in ("/style.css", "/api/style.css"):
                 self._send_file("style.css")
-            elif path == "/app.js":
+            elif path in ("/app.js", "/api/app.js"):
                 self._send_file("app.js")
-            elif path == "/model_weights.json":
+            elif path.endswith("model_weights.json"):
                 self._send_file("model_weights.json")
-            elif path == "/medicines.json":
+            elif path.endswith("medicines.json"):
                 self._send_file("medicines.json")
-            elif path == "/symptom_vocabulary.json":
+            elif path.endswith("symptom_vocabulary.json"):
                 self._send_file("symptom_vocabulary.json")
-            elif path == "/model_metadata.json":
+            elif path.endswith("model_metadata.json"):
                 self._send_file("model_metadata.json")
-            elif path.startswith("/assets/"):
-                self._send_file(parsed.path.lstrip("/"))
+            elif "/assets/" in path:
+                asset_name = path.split("/assets/")[-1]
+                self._send_file(os.path.join("assets", asset_name))
             else:
-                self._send_json_response(404, {"error": f"Endpoint not found: {self.path}"})
+                self._send_file("index.html")
+        except Exception as e:
+            self._send_json_response(500, {"error": str(e)})
         except Exception as e:
             self._send_json_response(500, {"error": str(e)})
 

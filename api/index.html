@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Dr. MediGuide AI — Medical Chatbot</title>
+  <meta name="description" content="Advanced clinical AI application with ML-backed condition prediction, pathophysiological symptom-match explanation, reference tablet suggestions, drug safety checks, and emergency triage.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+
+  <!-- ===================================================================== -->
+  <!-- 🎬 ONBOARDING WELCOME MODAL: Name + Optional Photo + Quick Profile    -->
+  <!-- ===================================================================== -->
+  <div id="onboarding-modal" class="onboarding-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboarding-title-text">
+    <div class="onboarding-container">
+      <button class="onboarding-close-btn" id="btn-close-onboard" title="Close modal" aria-label="Close modal">&times;</button>
+      
+      <img src="assets/doctor_avatar.png" class="onboarding-avatar" alt="Dr. MediGuide AI" onerror="this.outerHTML='<div class=\'onboarding-avatar-placeholder\'>👨‍⚕️</div>'">
+      <h2 id="onboarding-title-text" class="onboarding-title">Welcome to Dr. MediGuide AI</h2>
+      <p class="onboarding-subtitle">
+        Your personal AI Medical Assistant is ready to help.<br>
+        Please enter your details so I can personalize your diagnostic insights and safety checks.
+      </p>
+
+      <form id="onboarding-form" class="onboarding-form">
+        <div class="form-group">
+          <label class="form-label" for="onboard-name-input">Your Name <span class="required-asterisk">*</span></label>
+          <input type="text" id="onboard-name-input" class="form-input" placeholder="e.g. Rahul, Priya, Alex…" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Profile Photo <span class="text-muted">(optional)</span></label>
+          <div class="photo-upload-row">
+            <div id="onboard-photo-preview" class="photo-preview-circle">🧑‍💼</div>
+            <input type="file" id="onboard-photo-input" class="file-input" accept="image/*">
+            <label for="onboard-photo-input" class="btn btn-outline btn-sm">📷 Choose Photo</label>
+          </div>
+          <span class="form-caption">Personalizes your consultation and avatar.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="onboard-age-input">Age (Years) <span class="required-asterisk">*</span></label>
+          <input type="number" id="onboard-age-input" class="form-input" min="1" max="115" value="28" placeholder="e.g. 28" required>
+        </div>
+
+        <div class="form-actions" style="margin-top:1.4rem;">
+          <button type="submit" class="btn btn-primary btn-large btn-block" id="btn-start-consultation">
+            🚀 Enter Consultation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-overlay" class="sidebar-overlay hidden" aria-hidden="true"></div>
+
+  <!-- Emergency Red-Flag Alert Banner -->
+  <div id="emergency-banner" class="emergency-banner hidden" role="alert" aria-live="assertive">
+    <div class="emergency-content">
+      <div class="emergency-icon">🚨</div>
+      <div class="emergency-text">
+        <h4 id="emergency-title">CRITICAL MEDICAL EMERGENCY DETECTED</h4>
+        <p id="emergency-message">Please call 911 (US) or 112 / 102 (India) immediately.</p>
+      </div>
+      <a href="tel:911" class="btn-emergency-call" id="btn-emergency-call">📞 Call 911 / 112</a>
+      <button class="emergency-dismiss" id="btn-emergency-dismiss" title="Dismiss banner">&times;</button>
+    </div>
+  </div>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <button class="btn-sidebar-hamburger" id="btn-sidebar-hamburger" title="Toggle Clinical Profile Sidebar" aria-label="Toggle Clinical Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="hamburger-icon">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            <path d="M12 5v14" />
+            <path d="M5 12h14" />
+          </svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title-row">
+            <h1 class="brand-name">Dr. MediGuide AI</h1>
+            <span class="status-badge-live">● CLINICAL ASSISTANT ACTIVE</span>
+          </div>
+          <p class="brand-tagline">Clinical Symptom Prediction & Medicine Safety Chatbot</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="user-profile-header-btn" id="btn-header-profile" title="View / Edit Profile">
+          <div class="header-avatar-circle" id="header-avatar-circle">🧑‍💼</div>
+          <span class="header-user-name" id="header-user-name">User</span>
+        </button>
+        <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- RESPONSIVE AUTO-ADAPTIVE LAYOUT: Desktop / Tablet / Mobile            -->
+  <!-- ===================================================================== -->
+  <div class="app-layout">
+
+    <!-- ── LEFT SIDEBAR: Patient Clinical Profile (Streamlit Parity) ── -->
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Patient Profile Sidebar">
+      <div class="sidebar-inner">
+
+        <!-- Mobile Close Button -->
+        <div class="sidebar-mobile-header">
+          <span class="sidebar-mobile-title">Clinical Profile</span>
+          <button class="btn-sidebar-close" id="btn-sidebar-close" title="Close Sidebar" aria-label="Close Sidebar">&times;</button>
+        </div>
+
+        <!-- User Profile Card (Streamlit Parity) -->
+        <div class="sidebar-user-card" id="sidebar-user-card">
+          <div class="sidebar-user-avatar-wrap">
+            <div class="sidebar-user-avatar-circle" id="sidebar-user-avatar">🧑‍💼</div>
+          </div>
+          <div class="sidebar-user-name" id="sidebar-user-name">👋 Patient</div>
+          <div class="sidebar-user-details" id="sidebar-user-details">
+            📅 Young Adult (18 - 35 yrs)<br>
+            ⚧ Male · 🩺 Hypertension
+          </div>
+          <button class="btn btn-outline btn-sm btn-edit-profile-modal" id="btn-edit-profile-modal">
+            ✏️ Edit Profile / Switch User
+          </button>
+        </div>
+
+        <!-- Sidebar Section Header -->
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">👤 Patient Clinical Profile</h2>
+          <p class="sidebar-caption">
+            Personalise your profile to tailor diagnostic analysis, chronic disease precautions, and tablet safety.
+          </p>
+        </div>
+
+        <!-- Age Range / Bracket Dropdown -->
+        <div class="sidebar-group">
+          <label class="sidebar-label" for="sidebar-age-range">Age Range / Bracket</label>
+          <select id="sidebar-age-range" class="sidebar-select">
+            <option value="Infant / Child (0 - 12 yrs)">Infant / Child (0 - 12 yrs)</option>
+            <option value="Adolescent (13 - 17 yrs)">Adolescent (13 - 17 yrs)</option>
+            <option value="Young Adult (18 - 35 yrs)" selected>Young Adult (18 - 35 yrs)</option>
+            <option value="Adult (36 - 64 yrs)">Adult (36 - 64 yrs)</option>
+            <option value="Senior / Geriatric (65+ yrs)">Senior / Geriatric (65+ yrs)</option>
+          </select>
+        </div>
+
+        <!-- Specific Age Slider -->
+        <div class="sidebar-group">
+          <div class="slider-label-row">
+            <label class="sidebar-label" for="sidebar-age-slider">Specific Age (Years)</label>
+            <span class="slider-val-badge" id="sidebar-age-val">28</span>
+          </div>
+          <input type="range" id="sidebar-age-slider" class="sidebar-slider" min="18" max="35" value="28">
+        </div>
+
+        <!-- Pre-existing Chronic Conditions -->
+        <div class="sidebar-group">
+          <h3 class="sidebar-subheading">🩺 Existing Medical Issues</h3>
+          <label class="sidebar-label" for="select-add-condition">Pre-existing Diseases & Health Issues</label>
+          
+          <div class="tags-container" id="conditions-tags-container">
+            <!-- Dynamically populated tags with remove 'x' buttons -->
+          </div>
+
+          <div class="dropdown-add-wrap">
+            <select id="select-add-condition" class="sidebar-select-add">
+              <option value="" disabled selected>+ Add a pre-existing condition…</option>
+              <option value="Type 2 Diabetes">Type 2 Diabetes</option>
+              <option value="Hypertension (High Blood Pressure)">Hypertension (High Blood Pressure)</option>
+              <option value="Chronic Kidney Disease (CKD)">Chronic Kidney Disease (CKD)</option>
+              <option value="Liver Cirrhosis / Hepatic Disease">Liver Cirrhosis / Hepatic Disease</option>
+              <option value="Bronchial Asthma / COPD">Bronchial Asthma / COPD</option>
+              <option value="Peptic Ulcer Disease / Acid Reflux (GERD)">Peptic Ulcer Disease / Acid Reflux (GERD)</option>
+              <option value="Coronary Artery Disease (CAD) / Heart Disease">Coronary Artery Disease (CAD) / Heart Disease</option>
+              <option value="Stroke History">Stroke History</option>
+              <option value="Thyroid Disorder">Thyroid Disorder</option>
+              <option value="None / Generally Healthy">None / Generally Healthy</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Other Symptoms / Health Notes -->
+        <div class="sidebar-group">
+          <label class="sidebar-label" for="sidebar-health-notes">Other Symptoms / Health Notes</label>
+          <input type="text" id="sidebar-health-notes" class="sidebar-input" placeholder="e.g. chronic acidity, heavy smoker, migra">
+        </div>
+
+        <!-- Biological Sex -->
+        <div class="sidebar-group">
+          <label class="sidebar-label" for="sidebar-sex">Biological Sex</label>
+          <select id="sidebar-sex" class="sidebar-select">
+            <option value="Unspecified">Unspecified</option>
+            <option value="Female">Female</option>
+            <option value="Male" selected>Male</option>
+          </select>
+        </div>
+
+        <!-- Pregnant checkbox (if Female) -->
+        <div class="sidebar-group hidden" id="sidebar-pregnant-group">
+          <label class="sidebar-checkbox-label">
+            <input type="checkbox" id="sidebar-pregnant"> 🤰 Pregnant or Breastfeeding?
+          </label>
+        </div>
+
+        <!-- Known Drug Allergies -->
+        <div class="sidebar-group">
+          <label class="sidebar-label" for="select-add-allergy">Known Drug Allergies</label>
+          <div class="tags-container" id="allergies-tags-container">
+            <!-- Dynamically populated allergy tags -->
+          </div>
+          <select id="select-add-allergy" class="sidebar-select-add">
+            <option value="" disabled selected>+ Add an allergy…</option>
+            <option value="Penicillin">Penicillin</option>
+            <option value="Amoxicillin">Amoxicillin</option>
+            <option value="Aspirin / NSAIDs">Aspirin / NSAIDs</option>
+            <option value="Sulfa drugs">Sulfa drugs</option>
+            <option value="Macrolides">Macrolides</option>
+            <option value="Latex">Latex</option>
+          </select>
+        </div>
+
+        <!-- Current Medications -->
+        <div class="sidebar-group">
+          <label class="sidebar-label" for="select-add-med">Current Medications</label>
+          <div class="tags-container" id="meds-tags-container">
+            <!-- Dynamically populated current medications tags -->
+          </div>
+          <select id="select-add-med" class="sidebar-select-add">
+            <option value="" disabled selected>+ Add current medication…</option>
+            <option value="Warfarin">Warfarin</option>
+            <option value="Ibuprofen">Ibuprofen</option>
+            <option value="Aspirin">Aspirin</option>
+            <option value="Metformin">Metformin</option>
+            <option value="Omeprazole">Omeprazole</option>
+            <option value="Atorvastatin">Atorvastatin</option>
+            <option value="Lisinopril">Lisinopril</option>
+            <option value="Paracetamol">Paracetamol</option>
+          </select>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <!-- 🔍 Medicine Lookup -->
+        <div class="sidebar-group">
+          <h3 class="sidebar-subheading">🔍 Medicine Lookup</h3>
+          <div class="sidebar-search-row">
+            <input type="text" id="sidebar-med-search" class="sidebar-input" placeholder="Search brand / generic (e.g. Dolo 650, Tylenol)…">
+            <button class="btn btn-primary btn-sm" id="btn-sidebar-med-search">Search</button>
+          </div>
+          <div id="sidebar-med-results" class="sidebar-results-box"></div>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <!-- ⚠️ Drug Interaction Checker -->
+        <div class="sidebar-group">
+          <h3 class="sidebar-subheading">⚠️ Drug Interaction Checker</h3>
+          <p class="sidebar-caption">Screen 2+ medications for severe bleeding, cardiac, or liver interactions.</p>
+          <button class="btn btn-primary btn-block btn-sm" id="btn-screen-interactions">
+            🔍 Check Regimen Interactions
+          </button>
+          <div id="sidebar-interaction-results" class="sidebar-results-box"></div>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <!-- Clear Chat Button -->
+        <button class="btn btn-secondary btn-block btn-sm" id="btn-clear-chat">
+          🗑️ Clear Chat History
+        </button>
+
+        <!-- Clinical Disclaimer Box -->
+        <div class="sidebar-disclaimer-box">
+          <strong>⚕️ Clinical Notice</strong><br>
+          MediGuide AI is an <strong>educational research prototype</strong>. It does not provide definitive medical diagnoses or prescribe medications. Always consult a licensed healthcare professional.
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- ── RIGHT MAIN CHAT AREA (Streamlit Parity) ── -->
+    <main class="app-main">
+
+      <!-- Doctor Hero Card -->
+      <div class="doctor-hero-card">
+        <div class="doctor-hero-inner">
+          <div class="doctor-avatar-wrap">
+            <img src="assets/doctor_avatar.png" class="doctor-avatar-circle" alt="Dr. MediGuide AI" onerror="this.outerHTML='<div class=\'doctor-avatar-circle fallback\'>👨‍⚕️</div>'">
+          </div>
+          <div class="doctor-hero-body">
+            <div class="hero-title-row">
+              <h2 class="hero-title">Dr. MediGuide AI</h2>
+              <span class="status-badge-live">● CLINICAL ASSISTANT ACTIVE</span>
+            </div>
+            <p class="hero-text">
+              Hello <strong id="hero-user-name">there</strong>! 👋 I am your AI Medical Assistant. Describe your symptoms naturally or ask about medicines. I will analyze hallmark markers, predict possible conditions, explain the underlying symptom correlation, and recommend standard reference tablets with strict safety checks.
+            </p>
+            <div class="example-pills-row">
+              <button class="example-pill" data-query="High fever with chills, shivering, and headache">💡 "High fever with chills, shivering, and headache"</button>
+              <button class="example-pill" data-query="Severe stomach burning after meals">💡 "Severe stomach burning after meals"</button>
+              <button class="example-pill" data-query="Continuous sneezing, watery eyes, and runny nose">💡 "Continuous sneezing, watery eyes, and runny nose"</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-Column Model Accuracy Metrics Row -->
+      <div class="metrics-grid" id="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-card-label">Model Accuracy</span>
+          <span class="metric-card-value" id="metric-accuracy">100.0%</span>
+          <span class="metric-card-sub">Held-out test split</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-card-label">Macro F1</span>
+          <span class="metric-card-value" id="metric-f1">100.0%</span>
+          <span class="metric-card-sub">Balanced harmonic mean</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-card-label">Top-3 Accuracy</span>
+          <span class="metric-card-value" id="metric-top3">100.0%</span>
+          <span class="metric-card-sub">Condition in top 3 differential</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-card-label">Conditions Covered</span>
+          <span class="metric-card-value" id="metric-classes">41</span>
+          <span class="metric-card-sub">131 symptom features</span>
+        </div>
+      </div>
+
+      <!-- Chat Stream Container -->
+      <div class="chat-container" id="chat-container">
+        <div class="chat-stream" id="chat-stream">
+          <!-- Welcome Initial Message from Doctor -->
+          <div class="chat-message assistant">
+            <div class="chat-avatar-col">
+              <img src="assets/doctor_avatar.png" class="chat-avatar-img" alt="Dr. MediGuide AI" onerror="this.outerHTML='<div class=\'chat-avatar-placeholder\'>👨‍⚕️</div>'">
+            </div>
+            <div class="chat-bubble">
+              <div class="chat-bubble-header">
+                <span class="chat-sender-name">Dr. MediGuide AI</span>
+                <span class="chat-time-tag">Active</span>
+              </div>
+              <p id="chat-welcome-text">
+                Hello! I am ready to evaluate your clinical presentation. You can:
+              </p>
+              <ul class="styled-chat-list">
+                <li><strong>Describe symptoms naturally</strong> (e.g. <em>"high fever with chills, rigors and severe headache"</em>, <em>"severe stomach burning after meals"</em>, <em>"pain in legs and fatigue"</em>).</li>
+                <li><strong>Ask about any condition or disease</strong> (e.g. <em>"what is dengue"</em>, <em>"tell me about malaria"</em>, <em>"GERD symptoms"</em>).</li>
+                <li><strong>Ask about medications or tablets</strong> (e.g. <em>"Dolo 650"</em>, <em>"tablet for headache"</em>, <em>"Paracetamol dosage"</em>).</li>
+              </ul>
+              <p style="margin-top:0.6rem;font-size:0.86rem;color:var(--text-secondary);">
+                All diagnostic predictions and tablet safety warnings are customized in real-time to your <strong>Patient Clinical Profile</strong> in the sidebar.
+              </p>
+            </div>
+          </div>
+          <!-- Subsequent user & assistant messages appended here dynamically -->
+        </div>
+      </div>
+
+      <!-- Sticky Chat Input Bar at Bottom (Streamlit Parity) -->
+      <div class="chat-input-wrapper">
+        <form id="chat-input-form" class="chat-input-form">
+          <textarea 
+            id="chat-textarea" 
+            class="chat-textarea" 
+            rows="1" 
+            placeholder="Describe your symptoms (e.g. fever, headache, chills) or ask about a tablet…" 
+            aria-label="Describe symptoms"
+            required
+          ></textarea>
+          <button type="submit" class="btn-chat-send" id="btn-chat-send" title="Send message" aria-label="Send message">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="send-icon">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </button>
+        </form>
+        <div class="chat-input-subtext">
+          <span>Dr. MediGuide AI is an educational research prototype. Always seek professional physician guidance.</span>
+        </div>
+      </div>
+
+      <!-- Bottom Tabs: About · Methodology · Safety Protocols -->
+      <div class="bottom-tabs-section">
+        <div class="bottom-tab-buttons" role="tablist">
+          <button class="bottom-tab-btn active" data-bottom-tab="btab-about">ℹ️ About MediGuide</button>
+          <button class="bottom-tab-btn" data-bottom-tab="btab-method">🔬 AI Architecture</button>
+          <button class="bottom-tab-btn" data-bottom-tab="btab-safety">🛡️ Clinical Safety Protocols</button>
+        </div>
+
+        <div class="bottom-tab-content active" id="btab-about">
+          <h3>About Dr. MediGuide AI</h3>
+          <p>MediGuide AI is a research-oriented symptom prediction and medicine safety intelligence platform combining:</p>
+          <ul class="styled-list">
+            <li><strong>Machine Learning Benchmark:</strong> Trained across 4,920 clinical cases, 131 symptom features, and 41 disease classes with 100% held-out test accuracy.</li>
+            <li><strong>Regulatory Pharmacovigilance:</strong> Drug interaction matrix and indications benchmarked against US FDA DailyMed and CDSCO India.</li>
+            <li><strong>Emergency Red-Flag Screening:</strong> Continuous triage based on CDC, AHA, and WHO emergency algorithms.</li>
+          </ul>
+        </div>
+
+        <div class="bottom-tab-content" id="btab-method">
+          <h3>Machine Learning Architecture</h3>
+          <ul class="styled-list">
+            <li><strong>Champion Model:</strong> Calibrated Multinomial Logistic Regression & Random Forest ensemble with Platt scaling.</li>
+            <li><strong>NLP Extraction:</strong> Multi-gram entity matching with 250+ medical symptom synonym dictionaries, condition intent recognition, and negation resolution.</li>
+            <li><strong>Top-3 Diagnostic Candidates:</strong> Outputs probability-ranked candidate conditions with feature contribution attribution.</li>
+          </ul>
+        </div>
+
+        <div class="bottom-tab-content" id="btab-safety">
+          <h3>Medical Safety Protocols</h3>
+          <ul class="styled-list">
+            <li><strong>Zero Autonomous Prescriptions:</strong> All tablet references are provided strictly as educational standard-of-care references.</li>
+            <li><strong>Active Allergy Screening:</strong> Real-time cross-reactivity checking (e.g., Penicillin allergy vs. Beta-lactams).</li>
+            <li><strong>Emergency Prioritisation:</strong> Chest pain, stroke, or anaphylaxis trigger immediate 911 / 112 guidance ahead of all ML predictions.</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
