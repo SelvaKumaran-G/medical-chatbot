@@ -248,28 +248,347 @@ CONDITION_NAMES_MAP: Dict[str, str] = {
 }
 
 CONDITION_HALLMARK_SYMPTOMS: Dict[str, List[str]] = {
-    "Malaria": ["high_fever", "chills", "shivering", "headache", "sweating", "nausea"],
-    "Dengue": ["high_fever", "headache", "pain_behind_the_eyes", "joint_pain", "skin_rash", "nausea"],
-    "Typhoid": ["high_fever", "chills", "fatigue", "headache", "abdominal_pain", "diarrhoea"],
-    "GERD": ["acidity", "ulcers_on_tongue", "stomach_pain", "chest_pain", "cough"],
-    "Diabetes": ["irregular_sugar_level", "polyuria", "fatigue", "weight_loss", "blurred_and_distorted_vision", "increased_appetite"],
-    "Bronchial Asthma": ["breathlessness", "cough", "high_fever", "fatigue"],
-    "Migraine": ["headache", "acidity", "indigestion", "blurred_and_distorted_vision", "depression"],
-    "Common Cold": ["continuous_sneezing", "chills", "fatigue", "cough", "high_fever", "headache", "throat_irritation", "congestion"],
-    "Pneumonia": ["chills", "fatigue", "cough", "high_fever", "breathlessness", "sweating", "chest_pain"],
-    "Hypertension": ["headache", "dizziness", "loss_of_balance", "lack_of_concentration"],
-    "Jaundice": ["yellowish_skin", "dark_urine", "nausea", "loss_of_appetite", "abdominal_pain", "yellowing_of_eyes"],
-    "Urinary tract infection": ["burning_micturition", "bladder_discomfort", "foul_smell_of_urine", "continuous_feel_of_urine"],
-    "Arthritis": ["muscle_weakness", "stiff_neck", "swelling_joints", "movement_stiffness", "painful_walking"],
-    "Allergy": ["continuous_sneezing", "shivering", "chills", "watering_from_eyes"],
-    "Acne": ["skin_rash", "pus_filled_pimples", "blackheads", "scurring"],
-    "Peptic ulcer disease": ["stomach_pain", "acidity", "vomiting", "indigestion", "loss_of_appetite", "abdominal_pain"],
-    "Gastroenteritis": ["vomiting", "diarrhoea", "stomach_pain", "dehydration"],
-    "Heart attack": ["chest_pain", "breathlessness", "sweating", "vomiting"],
-    "Chicken pox": ["itching", "skin_rash", "fatigue", "lethargy", "high_fever", "headache", "loss_of_appetite", "mild_fever", "red_spots_over_body"],
-    "Tuberculosis": ["cough", "high_fever", "breathlessness", "sweating", "loss_of_appetite", "weight_loss", "phlegm", "chest_pain", "blood_in_sputum"],
-    "Fungal infection": ["itching", "skin_rash", "nodal_skin_eruptions", "dischromic_patches"],
-    "Psoriasis": ["skin_rash", "joint_pain", "skin_peeling", "silver_like_dusting", "small_dents_in_nails", "inflammatory_nails"]
+    "(vertigo) Paroymsal  Positional Vertigo": [
+        "headache",
+        "nausea",
+        "loss_of_balance",
+        "vomiting",
+        "unsteadiness",
+        "spinning_movements"
+    ],
+    "AIDS": [
+        "extra_marital_contacts",
+        "patches_in_throat",
+        "muscle_wasting",
+        "high_fever"
+    ],
+    "Acne": [
+        "blackheads",
+        "skin_rash",
+        "pus_filled_pimples",
+        "scurring"
+    ],
+    "Alcoholic hepatitis": [
+        "abdominal_pain",
+        "history_of_alcohol_consumption",
+        "fluid_overload",
+        "swelling_of_stomach",
+        "distention_of_abdomen",
+        "yellowish_skin",
+        "vomiting"
+    ],
+    "Allergy": [
+        "chills",
+        "continuous_sneezing",
+        "shivering",
+        "watering_from_eyes"
+    ],
+    "Arthritis": [
+        "muscle_weakness",
+        "swelling_joints",
+        "stiff_neck",
+        "movement_stiffness",
+        "painful_walking"
+    ],
+    "Bronchial Asthma": [
+        "cough",
+        "fatigue",
+        "high_fever",
+        "breathlessness",
+        "mucoid_sputum",
+        "family_history"
+    ],
+    "Cervical spondylosis": [
+        "dizziness",
+        "loss_of_balance",
+        "neck_pain",
+        "back_pain"
+    ],
+    "Chicken pox": [
+        "mild_fever",
+        "fatigue",
+        "skin_rash",
+        "red_spots_over_body",
+        "high_fever",
+        "swelled_lymph_nodes",
+        "loss_of_appetite",
+        "headache"
+    ],
+    "Chronic cholestasis": [
+        "loss_of_appetite",
+        "nausea",
+        "yellowish_skin",
+        "yellowing_of_eyes",
+        "itching",
+        "abdominal_pain",
+        "vomiting"
+    ],
+    "Common Cold": [
+        "malaise",
+        "fatigue",
+        "continuous_sneezing",
+        "phlegm",
+        "runny_nose",
+        "loss_of_smell",
+        "muscle_pain",
+        "chills"
+    ],
+    "Dengue": [
+        "skin_rash",
+        "vomiting",
+        "back_pain",
+        "joint_pain",
+        "chills",
+        "pain_behind_the_eyes",
+        "headache",
+        "loss_of_appetite"
+    ],
+    "Diabetes": [
+        "obesity",
+        "irregular_sugar_level",
+        "polyuria",
+        "fatigue",
+        "weight_loss",
+        "excessive_hunger",
+        "blurred_and_distorted_vision",
+        "restlessness"
+    ],
+    "Dimorphic hemmorhoids(piles)": [
+        "pain_during_bowel_movements",
+        "irritation_in_anus",
+        "pain_in_anal_region",
+        "bloody_stool",
+        "constipation"
+    ],
+    "Drug Reaction": [
+        "skin_rash",
+        "stomach_pain",
+        "itching",
+        "burning_micturition",
+        "spotting_urination"
+    ],
+    "Fungal infection": [
+        "nodal_skin_eruptions",
+        "itching",
+        "skin_rash",
+        "dischromic_patches"
+    ],
+    "GERD": [
+        "acidity",
+        "stomach_pain",
+        "vomiting",
+        "cough",
+        "chest_pain",
+        "ulcers_on_tongue"
+    ],
+    "Gastroenteritis": [
+        "sunken_eyes",
+        "diarrhoea",
+        "dehydration",
+        "vomiting"
+    ],
+    "Heart attack": [
+        "vomiting",
+        "sweating",
+        "breathlessness",
+        "chest_pain"
+    ],
+    "Hepatitis A": [
+        "mild_fever",
+        "dark_urine",
+        "diarrhoea",
+        "nausea",
+        "muscle_pain",
+        "joint_pain",
+        "loss_of_appetite",
+        "abdominal_pain"
+    ],
+    "Hepatitis B": [
+        "itching",
+        "lethargy",
+        "yellow_urine",
+        "dark_urine",
+        "malaise",
+        "loss_of_appetite",
+        "receiving_unsterile_injections",
+        "yellowish_skin"
+    ],
+    "Hepatitis C": [
+        "family_history",
+        "yellowish_skin",
+        "yellowing_of_eyes",
+        "nausea",
+        "fatigue",
+        "loss_of_appetite"
+    ],
+    "Hepatitis D": [
+        "dark_urine",
+        "vomiting",
+        "loss_of_appetite",
+        "yellowing_of_eyes",
+        "yellowish_skin",
+        "abdominal_pain",
+        "nausea",
+        "joint_pain"
+    ],
+    "Hepatitis E": [
+        "joint_pain",
+        "acute_liver_failure",
+        "abdominal_pain",
+        "yellowish_skin",
+        "high_fever",
+        "stomach_bleeding",
+        "loss_of_appetite",
+        "nausea"
+    ],
+    "Hypertension": [
+        "loss_of_balance",
+        "headache",
+        "lack_of_concentration",
+        "chest_pain",
+        "dizziness"
+    ],
+    "Hyperthyroidism": [
+        "fast_heart_rate",
+        "sweating",
+        "fatigue",
+        "weight_loss",
+        "mood_swings",
+        "diarrhoea",
+        "excessive_hunger",
+        "abnormal_menstruation"
+    ],
+    "Hypoglycemia": [
+        "blurred_and_distorted_vision",
+        "irritability",
+        "anxiety",
+        "excessive_hunger",
+        "headache",
+        "sweating",
+        "fatigue",
+        "drying_and_tingling_lips"
+    ],
+    "Hypothyroidism": [
+        "brittle_nails",
+        "mood_swings",
+        "lethargy",
+        "enlarged_thyroid",
+        "cold_hands_and_feets",
+        "depression",
+        "swollen_extremeties",
+        "dizziness"
+    ],
+    "Impetigo": [
+        "high_fever",
+        "yellow_crust_ooze",
+        "red_sore_around_nose",
+        "skin_rash",
+        "blister"
+    ],
+    "Jaundice": [
+        "fatigue",
+        "high_fever",
+        "yellowish_skin",
+        "vomiting",
+        "abdominal_pain",
+        "itching",
+        "dark_urine",
+        "weight_loss"
+    ],
+    "Malaria": [
+        "high_fever",
+        "chills",
+        "nausea",
+        "sweating",
+        "vomiting",
+        "muscle_pain",
+        "headache"
+    ],
+    "Migraine": [
+        "stiff_neck",
+        "visual_disturbances",
+        "acidity",
+        "blurred_and_distorted_vision",
+        "indigestion",
+        "excessive_hunger",
+        "irritability",
+        "depression"
+    ],
+    "Osteoarthritis": [
+        "neck_pain",
+        "knee_pain",
+        "hip_joint_pain",
+        "joint_pain",
+        "swelling_joints",
+        "painful_walking"
+    ],
+    "Paralysis (brain hemorrhage)": [
+        "headache",
+        "altered_sensorium",
+        "vomiting",
+        "weakness_of_one_body_side"
+    ],
+    "Peptic ulcer disease": [
+        "loss_of_appetite",
+        "vomiting",
+        "indigestion",
+        "passage_of_gases",
+        "internal_itching",
+        "abdominal_pain"
+    ],
+    "Pneumonia": [
+        "cough",
+        "fast_heart_rate",
+        "chills",
+        "rusty_sputum",
+        "sweating",
+        "phlegm",
+        "malaise",
+        "chest_pain"
+    ],
+    "Psoriasis": [
+        "skin_rash",
+        "silver_like_dusting",
+        "inflammatory_nails",
+        "skin_peeling",
+        "joint_pain",
+        "small_dents_in_nails"
+    ],
+    "Tuberculosis": [
+        "swelled_lymph_nodes",
+        "loss_of_appetite",
+        "weight_loss",
+        "high_fever",
+        "fatigue",
+        "breathlessness",
+        "vomiting",
+        "chest_pain"
+    ],
+    "Typhoid": [
+        "diarrhoea",
+        "fatigue",
+        "headache",
+        "vomiting",
+        "belly_pain",
+        "high_fever",
+        "abdominal_pain",
+        "nausea"
+    ],
+    "Urinary tract infection": [
+        "burning_micturition",
+        "bladder_discomfort",
+        "continuous_feel_of_urine",
+        "foul_smell_of_urine"
+    ],
+    "Varicose veins": [
+        "swollen_blood_vessels",
+        "swollen_legs",
+        "cramps",
+        "bruising",
+        "obesity",
+        "prominent_veins_on_calf",
+        "fatigue"
+    ]
 }
 
 EXTENDED_SYMPTOM_SYNONYM_MAP: Dict[str, str] = {
@@ -1101,11 +1420,15 @@ def app(environ, start_response):
             ])
             return [resp]
 
-        # 2. Static Web App Files
+        # 2. Static Web App Files & Single-Page Application (SPA) Routing
         file_to_serve = None
-        if path in ("", "/", "/index.html"):
+        if path in ("", "/", "/index.html", "/api", "/api/index.html"):
             file_to_serve = "index.html"
-        elif path in ("/style.css", "/app.js", "/model_weights.json", "/medicines.json", "/symptom_vocabulary.json", "/model_metadata.json"):
+        elif path in ("/style.css", "/api/style.css"):
+            file_to_serve = "style.css"
+        elif path in ("/app.js", "/api/app.js"):
+            file_to_serve = "app.js"
+        elif path in ("/model_weights.json", "/medicines.json", "/symptom_vocabulary.json", "/model_metadata.json"):
             file_to_serve = path.lstrip("/")
         elif path.startswith("/assets/"):
             file_to_serve = raw_path.lstrip("/")
@@ -1120,6 +1443,31 @@ def app(environ, start_response):
                     ("Content-Length", str(len(content)))
                 ])
                 return [content]
+
+            # In-memory embedded fallback for Vercel Serverless container
+            embedded_content = None
+            if file_to_serve.endswith("index.html") and EMBEDDED_INDEX_HTML:
+                embedded_content = EMBEDDED_INDEX_HTML.encode("utf-8")
+            elif file_to_serve.endswith("style.css") and EMBEDDED_STYLE_CSS:
+                embedded_content = EMBEDDED_STYLE_CSS.encode("utf-8")
+            elif file_to_serve.endswith("app.js") and EMBEDDED_APP_JS:
+                embedded_content = EMBEDDED_APP_JS.encode("utf-8")
+
+            if embedded_content is not None:
+                start_response("200 OK", cors_headers + [
+                    ("Content-Type", _get_content_type(file_to_serve)),
+                    ("Content-Length", str(len(embedded_content)))
+                ])
+                return [embedded_content]
+
+        # SPA Fallback for any client route: serve embedded index.html
+        if EMBEDDED_INDEX_HTML:
+            embedded_content = EMBEDDED_INDEX_HTML.encode("utf-8")
+            start_response("200 OK", cors_headers + [
+                ("Content-Type", "text/html; charset=utf-8"),
+                ("Content-Length", str(len(embedded_content)))
+            ])
+            return [embedded_content]
 
         # 3. 404 Not Found
         err = json.dumps({"error": f"Endpoint not found: {raw_path}"}).encode("utf-8")
