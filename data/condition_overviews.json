@@ -1,0 +1,208 @@
+{
+  "(vertigo) Paroymsal  Positional Vertigo": {
+    "overview": "Benign Paroxysmal Positional Vertigo (BPPV) is an inner ear disorder where tiny calcium carbonate crystals (otoconia) become dislodged and migrate into the semicircular canals, causing brief but intense episodes of dizziness and a spinning sensation triggered by changes in head position.",
+    "recommended_next_steps": "Perform the Dix-Hallpike diagnostic maneuver. Treatment with Epley or Semont repositioning maneuver by a trained clinician. Avoid sudden head movements.",
+    "urgent_warnings": "Seek emergency care if vertigo is accompanied by sudden hearing loss, severe headache, double vision, difficulty speaking, or limb weakness — these may indicate stroke."
+  },
+  "AIDS": {
+    "overview": "Acquired Immunodeficiency Syndrome (AIDS) is the advanced stage of HIV infection where the immune system is severely damaged, leaving the body vulnerable to opportunistic infections and certain cancers. HIV destroys CD4+ T-cells, the body's key immune defenders.",
+    "recommended_next_steps": "Get HIV testing (ELISA + Western blot confirmation). If positive, begin antiretroviral therapy (ART) immediately under specialist supervision. Monitor CD4 count and viral load regularly.",
+    "urgent_warnings": "Seek urgent care if experiencing rapid weight loss, persistent fever, chronic diarrhea lasting more than a week, pneumonia, or unusual skin lesions."
+  },
+  "Acne": {
+    "overview": "Acne vulgaris is a common skin condition where hair follicles become clogged with oil (sebum) and dead skin cells, leading to whiteheads, blackheads, pimples, and sometimes deep cysts. It is most common in teenagers but can affect adults too.",
+    "recommended_next_steps": "Start with gentle cleansing twice daily. Use topical benzoyl peroxide or salicylic acid. For moderate-severe acne, consult a dermatologist for retinoid or antibiotic therapy.",
+    "urgent_warnings": "See a dermatologist if acne is leaving deep scars, is severely painful, or does not improve after 8 weeks of over-the-counter treatment."
+  },
+  "Alcoholic hepatitis": {
+    "overview": "Alcoholic hepatitis is inflammation and swelling of the liver caused by excessive alcohol consumption over a prolonged period. The liver becomes damaged and cannot function properly, leading to jaundice, abdominal swelling, and pain.",
+    "recommended_next_steps": "Immediately stop all alcohol consumption. Consult a hepatologist for liver function tests (LFTs), ultrasound, and nutritional support. High-protein diet recommended.",
+    "urgent_warnings": "Emergency care needed if experiencing vomiting blood, black tarry stools, confusion/disorientation, or rapidly increasing abdominal swelling — signs of liver failure."
+  },
+  "Allergy": {
+    "overview": "An allergy occurs when the immune system overreacts to normally harmless substances (allergens) like pollen, dust mites, pet dander, or certain foods. This triggers symptoms like sneezing, itching, watery eyes, and skin rashes.",
+    "recommended_next_steps": "Identify and avoid known allergens. Use antihistamines for symptom relief. Consider allergy testing (skin prick test or IgE blood test) for persistent allergies.",
+    "urgent_warnings": "Seek emergency help immediately if experiencing throat swelling, difficulty breathing, rapid pulse, or dizziness — signs of anaphylaxis requiring epinephrine."
+  },
+  "Arthritis": {
+    "overview": "Arthritis is inflammation of one or more joints causing pain, swelling, stiffness, and reduced range of motion. The two most common types are osteoarthritis (wear-and-tear) and rheumatoid arthritis (autoimmune). It can affect people of all ages.",
+    "recommended_next_steps": "Get X-rays and blood tests (ESR, CRP, RF factor). Start with physical therapy and low-impact exercise. Use anti-inflammatory medications as directed by your doctor.",
+    "urgent_warnings": "Seek medical attention if a joint becomes suddenly hot, red, and extremely painful — this could indicate septic arthritis or gout requiring urgent treatment."
+  },
+  "Bronchial Asthma": {
+    "overview": "Bronchial asthma is a chronic respiratory condition where the airways become inflamed, narrow, and produce excess mucus, making breathing difficult. Triggers include allergens, cold air, exercise, and stress. Episodes cause wheezing, coughing, and chest tightness.",
+    "recommended_next_steps": "Get a pulmonary function test (spirometry). Use a rescue inhaler (salbutamol) for acute attacks. Start controller medication (inhaled corticosteroids) for persistent asthma.",
+    "urgent_warnings": "Call emergency services if experiencing severe breathlessness at rest, blue lips/fingertips, inability to speak in full sentences, or rescue inhaler not providing relief."
+  },
+  "Cervical spondylosis": {
+    "overview": "Cervical spondylosis is age-related wear and tear of the spinal discs and vertebrae in the neck. As discs dehydrate and shrink, bone spurs may develop, causing neck pain, stiffness, and sometimes numbness or tingling in the arms and hands.",
+    "recommended_next_steps": "Get neck X-ray or MRI. Start physiotherapy with neck exercises and stretching. Use a cervical collar for support during acute flare-ups. Apply heat/cold therapy.",
+    "urgent_warnings": "Seek immediate medical care if experiencing loss of bladder/bowel control, progressive arm weakness, or difficulty walking — signs of spinal cord compression."
+  },
+  "Chicken pox": {
+    "overview": "Chickenpox is a highly contagious viral infection caused by the varicella-zoster virus. It produces an itchy, blister-like rash that first appears on the chest, back, and face, then spreads. It also causes fever, tiredness, and loss of appetite.",
+    "recommended_next_steps": "Rest at home and stay isolated to prevent spreading. Use calamine lotion for itching. Take paracetamol for fever. Keep fingernails short to prevent scratching and secondary infection.",
+    "urgent_warnings": "Seek medical help if the rash spreads to eyes, fever exceeds 39°C for more than 4 days, blisters appear infected (red/warm/tender), or the patient has difficulty breathing."
+  },
+  "Chronic cholestasis": {
+    "overview": "Chronic cholestasis is a condition where bile flow from the liver is reduced or blocked for a prolonged period. Bile builds up in the liver, causing intense itching, jaundice (yellow skin/eyes), dark urine, and pale stools. It can be caused by liver diseases or bile duct problems.",
+    "recommended_next_steps": "Get liver function tests, ultrasound of the abdomen, and possibly MRCP (magnetic resonance cholangiopancreatography). Consult a gastroenterologist or hepatologist.",
+    "urgent_warnings": "Seek urgent care if experiencing severe right upper abdominal pain with high fever and chills (Charcot triad) — may indicate ascending cholangitis."
+  },
+  "Common Cold": {
+    "overview": "The common cold is a mild viral infection of the nose and throat (upper respiratory tract). It is usually caused by rhinoviruses and spreads through airborne droplets. Symptoms include runny nose, sneezing, sore throat, mild cough, and low-grade fever, typically resolving in 7-10 days.",
+    "recommended_next_steps": "Rest and drink plenty of warm fluids. Use saline nasal drops for congestion. Take paracetamol for fever and body aches. Honey and warm water can soothe sore throat.",
+    "urgent_warnings": "See a doctor if fever exceeds 39°C, symptoms worsen after 7 days, or you develop ear pain, severe sinus pain, or difficulty breathing — may indicate bacterial complication."
+  },
+  "Dengue": {
+    "overview": "Dengue is a mosquito-borne viral infection spread by Aedes mosquitoes. It causes sudden high fever, severe headache, pain behind the eyes, joint and muscle pain, and skin rash. Most cases are mild, but severe dengue can cause dangerous bleeding and organ damage.",
+    "recommended_next_steps": "Get a complete blood count (CBC) and Dengue NS1 antigen test. Rest and drink plenty of fluids (ORS, coconut water, juices). Use only paracetamol for fever — strictly avoid aspirin and ibuprofen.",
+    "urgent_warnings": "Seek emergency care immediately if experiencing severe abdominal pain, persistent vomiting, bleeding from gums/nose, blood in vomit/stool, or extreme fatigue — warning signs of severe dengue."
+  },
+  "Diabetes": {
+    "overview": "Diabetes mellitus is a chronic metabolic condition where the body cannot properly process blood sugar (glucose). In Type 2 diabetes, the body becomes resistant to insulin or does not produce enough. This leads to high blood sugar, causing increased thirst, frequent urination, fatigue, and blurred vision.",
+    "recommended_next_steps": "Get fasting blood glucose and HbA1c tests. Start dietary modifications (reduce sugar, refined carbs). Exercise regularly (30 min/day). Monitor blood sugar at home if prescribed.",
+    "urgent_warnings": "Seek emergency care if blood sugar exceeds 300 mg/dL, if experiencing confusion, fruity-smelling breath, excessive thirst with vomiting, or loss of consciousness."
+  },
+  "Dimorphic hemmorhoids(piles)": {
+    "overview": "Hemorrhoids (piles) are swollen blood vessels in and around the rectum and anus. They can be internal (inside the rectum) or external (under the skin around the anus). Common symptoms include pain during bowel movements, bleeding, itching, and swelling around the anus.",
+    "recommended_next_steps": "Increase fiber intake (fruits, vegetables, whole grains) and drink 8-10 glasses of water daily. Use sitz baths (warm water soaks) for 15 minutes, 2-3 times daily. Apply topical hemorrhoid cream.",
+    "urgent_warnings": "See a doctor if experiencing heavy rectal bleeding, severe pain, or hemorrhoids that do not improve after a week of home treatment."
+  },
+  "Drug Reaction": {
+    "overview": "A drug reaction (adverse drug reaction) is an unwanted or harmful response to a medication. It can range from mild skin rashes and itching to severe allergic reactions. Some drug reactions are predictable (dose-related) while others are unpredictable (allergic/immune-mediated).",
+    "recommended_next_steps": "Stop the suspected medication immediately and note the drug name, dose, and timing of reaction. Consult your doctor for alternative medication. Get allergy testing if a severe reaction occurred.",
+    "urgent_warnings": "Call emergency services if experiencing difficulty breathing, facial/tongue swelling, widespread blistering skin rash (Stevens-Johnson syndrome), or collapse — these are life-threatening."
+  },
+  "Fungal infection": {
+    "overview": "Fungal skin infections are caused by fungi (dermatophytes) that thrive in warm, moist areas of the body. Common types include ringworm, athlete's foot, and jock itch. They cause itchy, red, scaly patches on the skin that may spread in circular patterns.",
+    "recommended_next_steps": "Keep the affected area clean and dry. Apply topical antifungal cream (clotrimazole or miconazole) twice daily for 2-4 weeks. Wear loose, breathable cotton clothing.",
+    "urgent_warnings": "See a doctor if the infection covers a large area, does not improve after 2 weeks of treatment, affects the scalp or nails, or occurs in someone with a weakened immune system."
+  },
+  "GERD": {
+    "overview": "Gastroesophageal Reflux Disease (GERD) is a chronic digestive condition where stomach acid frequently flows back into the esophagus (food pipe). This acid reflux irritates the esophageal lining, causing heartburn (burning sensation in the chest), sour taste, and difficulty swallowing.",
+    "recommended_next_steps": "Take proton pump inhibitors (PPIs) 30 minutes before meals. Eat smaller, more frequent meals. Avoid spicy, fried, and acidic foods. Do not lie down for 2-3 hours after eating. Elevate the head of your bed.",
+    "urgent_warnings": "See a doctor urgently if experiencing difficulty swallowing, vomiting blood, unintentional weight loss, or chest pain that feels like a heart attack."
+  },
+  "Gastroenteritis": {
+    "overview": "Gastroenteritis (stomach flu) is inflammation of the stomach and intestines, usually caused by viral or bacterial infection from contaminated food or water. It causes watery diarrhea, vomiting, stomach cramps, nausea, and sometimes fever.",
+    "recommended_next_steps": "Focus on rehydration with ORS (oral rehydration salts), clear broths, and small sips of water. Follow the BRAT diet (bananas, rice, applesauce, toast). Rest the stomach for a few hours after vomiting.",
+    "urgent_warnings": "Seek medical help if unable to keep fluids down for 24 hours, notice blood in vomit/stool, have high fever above 39°C, or show signs of dehydration (dry mouth, no urination, dizziness)."
+  },
+  "Heart attack": {
+    "overview": "A heart attack (myocardial infarction) occurs when blood flow to a part of the heart muscle is suddenly blocked, usually by a blood clot in a coronary artery. Without blood flow, the heart muscle begins to die. Symptoms include crushing chest pain, shortness of breath, cold sweats, and pain radiating to the arm or jaw.",
+    "recommended_next_steps": "CALL EMERGENCY SERVICES (911/112/102) IMMEDIATELY. Chew an aspirin (325 mg) if not allergic. Sit upright and rest. Do not drive yourself to the hospital.",
+    "urgent_warnings": "THIS IS A LIFE-THREATENING EMERGENCY. Every minute without treatment causes more heart muscle damage. Time is critical — call for help immediately."
+  },
+  "Hepatitis A": {
+    "overview": "Hepatitis A is a highly contagious liver infection caused by the hepatitis A virus, usually spread through contaminated food or water. It causes inflammation of the liver, leading to fatigue, nausea, abdominal pain, loss of appetite, and jaundice. Most people recover fully.",
+    "recommended_next_steps": "Get hepatitis A antibody (IgM anti-HAV) blood test. Rest and maintain adequate nutrition and hydration. Avoid alcohol completely. Practice good hand hygiene to prevent spread.",
+    "urgent_warnings": "Seek urgent care if experiencing severe vomiting, signs of dehydration, very dark urine with pale stools, or sudden worsening of jaundice."
+  },
+  "Hepatitis B": {
+    "overview": "Hepatitis B is a serious liver infection caused by the hepatitis B virus (HBV), spread through blood, semen, or other body fluids. It can become chronic and lead to liver cirrhosis or cancer. Symptoms include fatigue, jaundice, dark urine, joint pain, and abdominal discomfort.",
+    "recommended_next_steps": "Get HBsAg, anti-HBc, and HBV DNA tests. Consult a hepatologist. Chronic hepatitis B may require antiviral therapy. Get vaccinated if not already immune. Screen household contacts.",
+    "urgent_warnings": "Seek emergency care if experiencing confusion, abdominal swelling (ascites), vomiting blood, or severe jaundice — may indicate acute liver failure."
+  },
+  "Hepatitis C": {
+    "overview": "Hepatitis C is a viral liver infection caused by the hepatitis C virus (HCV), primarily spread through blood-to-blood contact. It often has no symptoms for years but can silently damage the liver, leading to cirrhosis and liver cancer if untreated. Modern treatments can cure most cases.",
+    "recommended_next_steps": "Get anti-HCV antibody test and HCV RNA confirmatory test. Consult a hepatologist for direct-acting antiviral (DAA) therapy. Avoid alcohol. Get liver function tests and fibroscan.",
+    "urgent_warnings": "Seek medical attention for signs of advanced liver disease: abdominal swelling, confusion, easy bruising/bleeding, or persistent fatigue with jaundice."
+  },
+  "Hepatitis D": {
+    "overview": "Hepatitis D (delta hepatitis) is a liver infection caused by the hepatitis D virus, which only occurs in people already infected with hepatitis B. Co-infection makes liver disease more severe and accelerates progression to cirrhosis.",
+    "recommended_next_steps": "Get anti-HDV antibody and HDV RNA tests. Ensure hepatitis B is being treated. Consult a liver specialist. Pegylated interferon may be considered for treatment.",
+    "urgent_warnings": "Seek urgent care if experiencing rapid worsening of jaundice, mental confusion, abdominal swelling, or bleeding — may indicate fulminant hepatic failure."
+  },
+  "Hepatitis E": {
+    "overview": "Hepatitis E is a liver infection caused by the hepatitis E virus, typically spread through contaminated drinking water. It causes fatigue, nausea, jaundice, fever, and abdominal pain. Most cases resolve on their own, but it can be dangerous in pregnant women.",
+    "recommended_next_steps": "Get anti-HEV IgM antibody test. Rest and stay well hydrated. Avoid alcohol and hepatotoxic drugs. Eat a balanced, easily digestible diet. The infection usually resolves in 4-6 weeks.",
+    "urgent_warnings": "Pregnant women with hepatitis E need immediate medical supervision due to high risk of acute liver failure. Seek emergency care for severe vomiting, confusion, or bleeding."
+  },
+  "Hypertension": {
+    "overview": "Hypertension (high blood pressure) is a chronic condition where the force of blood against artery walls is consistently too high. It usually has no symptoms (called the 'silent killer') but over time damages the heart, brain, kidneys, and blood vessels, increasing risk of heart attack and stroke.",
+    "recommended_next_steps": "Monitor blood pressure regularly (target below 130/80 mmHg). Reduce salt intake to less than 5g/day. Exercise 30 minutes daily. Maintain healthy weight. Take prescribed medications consistently.",
+    "urgent_warnings": "Seek emergency care if blood pressure exceeds 180/120 mmHg with symptoms like severe headache, chest pain, vision changes, difficulty breathing, or numbness — hypertensive crisis."
+  },
+  "Hyperthyroidism": {
+    "overview": "Hyperthyroidism occurs when the thyroid gland produces too much thyroid hormone, speeding up the body's metabolism. This causes weight loss despite increased appetite, rapid heartbeat, sweating, tremors, anxiety, and irregular menstrual periods. Graves' disease is the most common cause.",
+    "recommended_next_steps": "Get thyroid function tests (TSH, free T3, free T4) and thyroid antibodies. Consult an endocrinologist. Treatment options include anti-thyroid medications, radioactive iodine, or surgery.",
+    "urgent_warnings": "Seek emergency care for thyroid storm symptoms: very rapid heartbeat (>140 bpm), high fever, confusion, agitation, or loss of consciousness."
+  },
+  "Hypoglycemia": {
+    "overview": "Hypoglycemia (low blood sugar) occurs when blood glucose drops below 70 mg/dL. It commonly affects people with diabetes taking insulin or certain medications. Symptoms include shakiness, sweating, confusion, rapid heartbeat, hunger, irritability, and blurred vision.",
+    "recommended_next_steps": "Follow the 15-15 rule: eat 15g of fast-acting carbs (glucose tablets, juice, candy), wait 15 minutes, recheck blood sugar. If still low, repeat. Once stable, eat a balanced snack or meal.",
+    "urgent_warnings": "Call emergency services if the person loses consciousness, has a seizure, or cannot swallow — they may need a glucagon injection or IV glucose immediately."
+  },
+  "Hypothyroidism": {
+    "overview": "Hypothyroidism occurs when the thyroid gland does not produce enough thyroid hormone, slowing down the body's metabolism. This causes fatigue, weight gain, cold intolerance, constipation, dry skin, hair loss, depression, and brain fog. Hashimoto's thyroiditis is the most common cause.",
+    "recommended_next_steps": "Get thyroid function tests (TSH, free T4). Start levothyroxine replacement therapy as prescribed. Take medication on an empty stomach, 30-60 minutes before breakfast. Recheck TSH after 6-8 weeks.",
+    "urgent_warnings": "Seek emergency care for myxedema coma symptoms: extreme fatigue, hypothermia (very low body temperature), slow breathing, confusion, or unresponsiveness."
+  },
+  "Impetigo": {
+    "overview": "Impetigo is a common and highly contagious bacterial skin infection, mainly affecting children. It is caused by Staphylococcus or Streptococcus bacteria. It produces red sores that burst, ooze, and form honey-colored yellowish crusts, most commonly around the nose and mouth.",
+    "recommended_next_steps": "Keep the affected area clean with gentle soap and water. Apply prescribed antibiotic ointment (mupirocin). Cover sores with bandages. Wash hands frequently and avoid touching the sores.",
+    "urgent_warnings": "See a doctor if sores spread rapidly, the child develops fever, or the infection does not improve after 3 days of antibiotic treatment — may need oral antibiotics."
+  },
+  "Jaundice": {
+    "overview": "Jaundice is a condition where the skin and whites of the eyes turn yellow due to a buildup of bilirubin (a yellow pigment from red blood cell breakdown) in the blood. It is not a disease itself but a sign of an underlying problem with the liver, bile ducts, or blood cells.",
+    "recommended_next_steps": "Get liver function tests (LFTs), complete blood count, and abdominal ultrasound. Identify the underlying cause (hepatitis, gallstones, hemolysis). Stay well hydrated and avoid alcohol.",
+    "urgent_warnings": "Seek urgent medical care if jaundice is accompanied by severe abdominal pain, high fever, mental confusion, or very dark urine with pale stools."
+  },
+  "Malaria": {
+    "overview": "Malaria is a serious mosquito-borne disease caused by Plasmodium parasites transmitted through infected Anopheles mosquito bites. It causes recurring cycles of high fever with chills and sweating, headache, muscle pain, nausea, and fatigue. If untreated, it can be life-threatening.",
+    "recommended_next_steps": "Get a rapid diagnostic test (RDT) or blood smear for malaria parasites. Start antimalarial treatment immediately upon confirmation. Rest and maintain hydration. Use mosquito nets to prevent reinfection.",
+    "urgent_warnings": "Seek emergency care if experiencing altered consciousness, severe anemia, difficulty breathing, repeated vomiting, very dark urine, or convulsions — signs of severe/cerebral malaria."
+  },
+  "Migraine": {
+    "overview": "Migraine is a neurological condition causing intense, throbbing headaches usually on one side of the head. Attacks can last 4-72 hours and may be accompanied by nausea, vomiting, and extreme sensitivity to light and sound. Some people experience visual disturbances (aura) before the headache.",
+    "recommended_next_steps": "Keep a headache diary to identify triggers (stress, certain foods, hormonal changes). Take prescribed pain relievers at the first sign of an attack. Consider preventive medication if migraines occur frequently.",
+    "urgent_warnings": "Seek emergency care if experiencing the worst headache of your life, headache with fever and stiff neck, sudden headache with confusion, or headache after a head injury."
+  },
+  "Osteoarthritis": {
+    "overview": "Osteoarthritis (OA) is the most common form of arthritis, caused by gradual wearing down of the protective cartilage that cushions the ends of bones. It most commonly affects joints in the knees, hips, hands, and spine, causing pain, stiffness, and reduced flexibility.",
+    "recommended_next_steps": "Get X-rays of affected joints. Start regular low-impact exercise (walking, swimming, cycling). Maintain healthy weight to reduce joint stress. Use pain relievers as directed.",
+    "urgent_warnings": "See a doctor if joint pain suddenly becomes severe, a joint becomes hot and swollen, or you have difficulty performing daily activities like walking or climbing stairs."
+  },
+  "Paralysis (brain hemorrhage)": {
+    "overview": "Brain hemorrhage is a type of stroke caused by bleeding in or around the brain when a blood vessel bursts. It can cause sudden paralysis or weakness on one side of the body, severe headache, difficulty speaking, vision problems, and loss of consciousness. It is a medical emergency.",
+    "recommended_next_steps": "CALL EMERGENCY SERVICES IMMEDIATELY (911/112/102). Use the FAST test: Face drooping, Arm weakness, Speech difficulty, Time to call emergency. Do not give food, water, or medication.",
+    "urgent_warnings": "THIS IS A LIFE-THREATENING EMERGENCY. Every minute without treatment causes permanent brain damage. Immediate hospital care with CT scan and neurosurgical evaluation is critical."
+  },
+  "Peptic ulcer disease": {
+    "overview": "Peptic ulcer disease involves open sores (ulcers) that develop on the inner lining of the stomach or the upper part of the small intestine. The most common causes are H. pylori bacterial infection and long-term use of NSAIDs. Symptoms include burning stomach pain, bloating, nausea, and loss of appetite.",
+    "recommended_next_steps": "Get tested for H. pylori (breath test, stool test, or blood test). Start proton pump inhibitors (PPIs). If H. pylori positive, take triple therapy (PPI + 2 antibiotics). Avoid NSAIDs and alcohol.",
+    "urgent_warnings": "Seek emergency care if experiencing sudden severe abdominal pain, vomiting blood (looks like coffee grounds), black tarry stools, or fainting — may indicate bleeding or perforated ulcer."
+  },
+  "Pneumonia": {
+    "overview": "Pneumonia is an infection that inflames the air sacs in one or both lungs. The air sacs may fill with fluid or pus, causing cough with phlegm, fever, chills, and difficulty breathing. It can be caused by bacteria, viruses, or fungi and ranges from mild to life-threatening.",
+    "recommended_next_steps": "Get a chest X-ray and sputum culture. Start prescribed antibiotics (if bacterial) promptly. Rest, drink plenty of fluids, and take paracetamol for fever. Use a humidifier to ease breathing.",
+    "urgent_warnings": "Seek emergency care if experiencing severe breathing difficulty, chest pain when breathing, confusion, blue lips/fingertips, or fever above 40°C."
+  },
+  "Psoriasis": {
+    "overview": "Psoriasis is a chronic autoimmune skin condition where skin cells multiply up to 10 times faster than normal, creating thick, red, scaly patches covered with silvery-white scales. It commonly affects the elbows, knees, scalp, and lower back. It is not contagious.",
+    "recommended_next_steps": "Consult a dermatologist. Use prescribed topical corticosteroids and moisturizers. Keep skin well hydrated. Consider phototherapy (UV light treatment) for moderate-severe cases.",
+    "urgent_warnings": "See a doctor if psoriasis covers large areas of the body, causes joint pain and swelling (psoriatic arthritis), or becomes red, swollen, and painful across most of the body (erythrodermic psoriasis)."
+  },
+  "Tuberculosis": {
+    "overview": "Tuberculosis (TB) is a serious bacterial infection caused by Mycobacterium tuberculosis that primarily affects the lungs. It spreads through airborne droplets when an infected person coughs or sneezes. Symptoms include persistent cough lasting more than 3 weeks, coughing up blood, night sweats, weight loss, and fever.",
+    "recommended_next_steps": "Get a chest X-ray, sputum test (AFB smear and culture), and Mantoux tuberculin skin test. Start the full course of anti-TB medication (DOTS: 6-9 months) and never stop treatment early.",
+    "urgent_warnings": "Seek medical attention if coughing up blood, experiencing severe breathing difficulty, or symptoms worsen despite treatment. Incomplete treatment creates drug-resistant TB."
+  },
+  "Typhoid": {
+    "overview": "Typhoid fever is a serious bacterial infection caused by Salmonella typhi, spread through contaminated food and water. It causes sustained high fever (step-ladder pattern), headache, stomach pain, weakness, and either constipation or diarrhea. Without treatment, it can be fatal.",
+    "recommended_next_steps": "Get a Widal test or blood culture for confirmation. Start prescribed antibiotics immediately. Rest, drink plenty of fluids, and eat soft, easily digestible food. Practice strict hand hygiene.",
+    "urgent_warnings": "Seek emergency care if experiencing severe abdominal pain, high fever above 40°C, bloody stool, confusion, or abdominal distension — may indicate intestinal perforation."
+  },
+  "Urinary tract infection": {
+    "overview": "A urinary tract infection (UTI) is a bacterial infection in any part of the urinary system — kidneys, bladder, ureters, or urethra. It most commonly affects the bladder and urethra. Symptoms include a strong urge to urinate, burning sensation during urination, cloudy or strong-smelling urine.",
+    "recommended_next_steps": "Get a urine routine and culture test. Start prescribed antibiotics and complete the full course. Drink plenty of water (at least 8 glasses/day). Urinate frequently and do not hold urine.",
+    "urgent_warnings": "Seek urgent care if experiencing high fever with back/flank pain, blood in urine, nausea/vomiting, or symptoms persisting after 48 hours of antibiotics — may indicate kidney infection."
+  },
+  "Varicose veins": {
+    "overview": "Varicose veins are enlarged, twisted veins that usually appear in the legs and feet. They occur when the valves inside veins weaken, allowing blood to pool. They appear as bulging, blue-purple veins under the skin and can cause aching, heaviness, swelling, and leg cramps.",
+    "recommended_next_steps": "Elevate legs when resting. Wear compression stockings during the day. Exercise regularly (walking improves circulation). Avoid standing or sitting for long periods. Consult a vascular surgeon for severe cases.",
+    "urgent_warnings": "Seek medical attention if a varicose vein starts bleeding, the leg becomes suddenly swollen and painful (could be deep vein thrombosis), or skin ulcers develop near the ankle."
+  }
+}
+

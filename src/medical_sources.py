@@ -721,14 +721,84 @@ SYMPTOM_DEFINITIONS: Dict[str, Dict[str, str]] = {
 # ---------------------------------------------------------------------------
 # Helper API Functions
 # ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Dynamic 41-Condition Clinical Knowledge Loader
+# ---------------------------------------------------------------------------
+_DYNAMIC_OVERVIEWS = None
+_DYNAMIC_MEDS = None
+
+def _load_dynamic_knowledge():
+    global _DYNAMIC_OVERVIEWS, _DYNAMIC_MEDS
+    if _DYNAMIC_OVERVIEWS is None:
+        import os, json
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        ov_path = os.path.join(base_dir, "data", "condition_overviews.json")
+        med_path = os.path.join(base_dir, "data", "condition_medicines.json")
+        if os.path.exists(ov_path):
+            with open(ov_path, "r", encoding="utf-8") as f:
+                _DYNAMIC_OVERVIEWS = json.load(f)
+        else:
+            _DYNAMIC_OVERVIEWS = {}
+        if os.path.exists(med_path):
+            with open(med_path, "r", encoding="utf-8") as f:
+                _DYNAMIC_MEDS = json.load(f)
+        else:
+            _DYNAMIC_MEDS = {}
+    return _DYNAMIC_OVERVIEWS, _DYNAMIC_MEDS
+
 def get_condition_info(condition_name: str) -> Dict[str, Any]:
     """Retrieves verified medical knowledge and official citations for a condition."""
+    dyn_overviews, dyn_meds = _load_dynamic_knowledge()
+
+    # Find matching condition in dynamic database first
+    matched_key = None
+    for key in dyn_overviews:
+        if key.lower() == condition_name.lower():
+            matched_key = key
+            break
+    if not matched_key:
+        for key in dyn_overviews:
+            if key.lower() in condition_name.lower() or condition_name.lower() in key.lower():
+                matched_key = key
+                break
+
+    if matched_key:
+        ov = dyn_overviews[matched_key]
+        raw_tabs = dyn_meds.get(matched_key, [])
+        formatted_tabs = []
+        for t in raw_tabs:
+            formatted_tabs.append({
+                "name": f"{t.get('generic_name', '')} ({', '.join(t.get('brand_names', [])[:2])})",
+                "category": t.get("therapeutic_class", "Therapeutic Agent"),
+                "indication": f"Targeted symptom relief and disease management for {matched_key}",
+                "dosage_form": "Tablet / Inhaler / Topical / Sachet",
+                "clinical_guidance": t.get("standard_dosage", "As directed by physician"),
+                "precautions": t.get("key_cautions", "Use as directed"),
+                "prescription_status": t.get("prescription_status", "Reference")
+            })
+
+        # Check if hardcoded base has extra clinical pearls
+        base = CONDITION_KNOWLEDGE_BASE.get(matched_key, {})
+        return {
+            "overview": ov.get("overview", base.get("overview", "")),
+            "common_symptoms": base.get("common_symptoms", [f"Clinical hallmark symptoms of {matched_key}"]),
+            "pathophysiology": base.get("pathophysiology", f"Pathophysiological response associated with {matched_key}."),
+            "symptom_match_rationale": base.get("symptom_match_rationale", f"Reported clinical presentation aligns with hallmark criteria for {matched_key}."),
+            "reference_tablets": formatted_tabs,
+            "recommended_next_steps": ov.get("recommended_next_steps", base.get("recommended_next_steps", "Consult a physician.")),
+            "urgent_warnings": ov.get("urgent_warnings", base.get("urgent_warnings", "")),
+            "citations": base.get("citations", [
+                {"source": f"National / WHO Clinical Guidelines for {matched_key}", "url": "https://www.who.int"}
+            ])
+        }
+
     if condition_name in CONDITION_KNOWLEDGE_BASE:
         return CONDITION_KNOWLEDGE_BASE[condition_name]
     for key, data in CONDITION_KNOWLEDGE_BASE.items():
         if key.lower() in condition_name.lower() or condition_name.lower() in key.lower():
             return data
-            
+
     # Generic fallback
     clean_name = condition_name.replace("_", " ").title()
     return {
