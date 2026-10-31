@@ -573,58 +573,68 @@ async function processUserQuery(text) {
   // 2. Append typing indicator bubble
   const typingBubbleId = appendTypingIndicator();
 
+  const startTime = Date.now();
   const payload = {
     text: text,
     patient_profile: state.patientProfile
   };
 
   let data = null;
+  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const isFileProto = window.location.protocol === 'file:';
 
-  // Attempt 1: Try relative /api/predict with 3s timeout
-  try {
-    const ctrl1 = new AbortController();
-    const t1 = setTimeout(() => ctrl1.abort(), 3000);
-    const res1 = await fetch('/api/predict', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: ctrl1.signal
-    });
-    clearTimeout(t1);
-    if (res1.ok) {
-      data = await res1.json();
-    }
-  } catch (e1) {
-    // Relative fetch did not respond (e.g. file:// or port mismatch)
-  }
-
-  // Attempt 2: If relative failed, try direct localhost:3000
-  if (!data) {
+  // Attempt 1: Try relative /api/predict (optimized 1000ms timeout for mobile responsiveness)
+  if (!isFileProto) {
     try {
-      const ctrl2 = new AbortController();
-      const t2 = setTimeout(() => ctrl2.abort(), 3000);
-      const res2 = await fetch('http://localhost:3000/api/predict', {
+      const ctrl1 = new AbortController();
+      const t1 = setTimeout(() => ctrl1.abort(), 1000);
+      const res1 = await fetch('/api/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        signal: ctrl2.signal
+        signal: ctrl1.signal
       });
-      clearTimeout(t2);
-      if (res2.ok) {
-        data = await res2.json();
+      clearTimeout(t1);
+      if (res1.ok) {
+        data = await res1.json();
       }
-    } catch (e2) {
-      // Localhost 3000 failed
+    } catch (e1) {
+      // Relative fetch timed out or offline
+    }
+
+    // Attempt 2: Only try localhost:3000 if user is ACTUALLY on desktop localhost (never on mobile!)
+    if (!data && isLocalHost && window.location.port !== '3000') {
+      try {
+        const ctrl2 = new AbortController();
+        const t2 = setTimeout(() => ctrl2.abort(), 600);
+        const res2 = await fetch('http://localhost:3000/api/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: ctrl2.signal
+        });
+        clearTimeout(t2);
+        if (res2.ok) {
+          data = await res2.json();
+        }
+      } catch (e2) {}
     }
   }
 
-  // Attempt 3: Guaranteed client-side clinical analysis (NEVER fails!)
+  // Attempt 3: Guaranteed instant client-side clinical analysis (executes in 1-2 ms!)
   if (!data) {
     data = clientSideClinicalAnalysis(text, state.patientProfile);
   }
 
-  removeTypingIndicator(typingBubbleId);
-  appendAssistantResponse(data);
+  // Ensure a smooth, natural typing delay of 250ms so reply feels organic and never lags
+  const elapsed = Date.now() - startTime;
+  const minDelay = 250;
+  const remainingDelay = Math.max(0, minDelay - elapsed);
+
+  setTimeout(() => {
+    removeTypingIndicator(typingBubbleId);
+    appendAssistantResponse(data);
+  }, remainingDelay);
 }
 
 function appendUserMessage(text) {
