@@ -218,26 +218,6 @@ function initOnboardingModal() {
   }
 }
 
-      localStorage.setItem('mediguide_has_onboarded', 'true');
-      saveProfile();
-      updateUIProfileDisplays();
-      hideModal();
-    });
-  }
-
-  if (btnClose) {
-    btnClose.addEventListener('click', hideModal);
-  }
-
-  if (btnEditProfile) {
-    btnEditProfile.addEventListener('click', showModal);
-  }
-
-  if (btnHeaderProfile) {
-    btnHeaderProfile.addEventListener('click', showModal);
-  }
-}
-
 // -----------------------------------------------------------------------------
 // Update All Profile Elements Across Desktop / Tablet / Mobile UI
 // -----------------------------------------------------------------------------
