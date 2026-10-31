@@ -8,6 +8,7 @@ const state = {
   theme: localStorage.getItem('mediguide_theme') || 'light',
   patientProfile: JSON.parse(localStorage.getItem('mediguide_profile') || JSON.stringify({
     name: 'Patient',
+    photo: '',
     age: 28,
     age_range: 'Young Adult (18 - 35 yrs)',
     biological_sex: 'Male',
@@ -32,7 +33,9 @@ const EMERGENCY_PATTERNS = [
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initOnboardingModal();
   initSidebarProfile();
+  updateUIProfileDisplays();
   initChatInput();
   initExamplePills();
   initModelMetadata();
@@ -69,12 +72,37 @@ function initTheme() {
     });
   }
 
-  // Sidebar toggle for mobile
-  const sidebarBtn = document.getElementById('btn-sidebar-toggle');
+  // Sidebar toggle for mobile drawer & overlay
+  const hamburger = document.getElementById('btn-sidebar-hamburger') || document.getElementById('btn-sidebar-toggle');
   const sidebar = document.getElementById('app-sidebar');
-  if (sidebarBtn && sidebar) {
-    sidebarBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
+  const overlay = document.getElementById('sidebar-overlay');
+  const closeSidebarBtn = document.getElementById('btn-sidebar-close');
+
+  const toggleSidebar = (forceOpen) => {
+    if (!sidebar) return;
+    const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open', shouldOpen);
+    if (overlay) {
+      overlay.classList.toggle('hidden', !shouldOpen);
+    }
+  };
+
+  if (hamburger) {
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSidebar();
+    });
+  }
+
+  if (closeSidebarBtn) {
+    closeSidebarBtn.addEventListener('click', () => {
+      toggleSidebar(false);
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      toggleSidebar(false);
     });
   }
 
@@ -85,6 +113,204 @@ function initTheme() {
       document.getElementById('emergency-banner').classList.add('hidden');
     });
   }
+}
+
+// -----------------------------------------------------------------------------
+// 1b. Onboarding Welcome Modal (Name & Optional Photo Login)
+// -----------------------------------------------------------------------------
+function initOnboardingModal() {
+  const modal = document.getElementById('onboarding-modal');
+  const form = document.getElementById('onboarding-form');
+  const nameInput = document.getElementById('onboard-name-input');
+  const photoInput = document.getElementById('onboard-photo-input');
+  const photoPreview = document.getElementById('onboard-photo-preview');
+  const ageRangeSelect = document.getElementById('onboard-age-range');
+  const sexSelect = document.getElementById('onboard-sex');
+  const conditionsGrid = document.getElementById('onboard-conditions-grid');
+  const btnClose = document.getElementById('btn-close-onboard');
+  const btnEditProfile = document.getElementById('btn-edit-profile-modal');
+  const btnHeaderProfile = document.getElementById('btn-header-profile');
+
+  let uploadedPhotoData = state.patientProfile.photo || '';
+
+  const populateModalForm = () => {
+    const p = state.patientProfile;
+    if (nameInput) nameInput.value = (p.name && p.name !== 'Patient') ? p.name : '';
+    if (photoPreview) {
+      if (p.photo) {
+        photoPreview.innerHTML = `<img src="${p.photo}" alt="User Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else {
+        photoPreview.innerHTML = '🧑‍💼';
+      }
+    }
+    if (ageRangeSelect && p.age_range) ageRangeSelect.value = p.age_range;
+    if (sexSelect && p.biological_sex) sexSelect.value = p.biological_sex;
+
+    if (conditionsGrid) {
+      const cbs = conditionsGrid.querySelectorAll('input[type="checkbox"]');
+      cbs.forEach(cb => {
+        cb.checked = (p.preexisting_conditions || []).includes(cb.value);
+      });
+    }
+    uploadedPhotoData = p.photo || '';
+  };
+
+  const showModal = () => {
+    populateModalForm();
+    if (modal) modal.classList.remove('hidden');
+    if (nameInput) setTimeout(() => nameInput.focus(), 150);
+  };
+
+  const hideModal = () => {
+    if (modal) modal.classList.add('hidden');
+  };
+
+  // Check if first-time visitor
+  const hasOnboarded = localStorage.getItem('mediguide_has_onboarded');
+  if (!hasOnboarded) {
+    showModal();
+  }
+
+  // Handle Photo File Upload
+  if (photoInput) {
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        if (file.size > 3 * 1024 * 1024) {
+          alert('Photo size is large. Please select an image under 3MB.');
+        }
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          uploadedPhotoData = evt.target.result;
+          if (photoPreview) {
+            photoPreview.innerHTML = `<img src="${uploadedPhotoData}" alt="Uploaded Photo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Handle Form Submission
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const enteredName = (nameInput ? nameInput.value.trim() : '') || 'Patient';
+      state.patientProfile.name = enteredName;
+      state.patientProfile.photo = uploadedPhotoData || '';
+
+      if (ageRangeSelect) {
+        state.patientProfile.age_range = ageRangeSelect.value;
+        if (state.patientProfile.age_range.includes('0 - 12')) state.patientProfile.age = 8;
+        else if (state.patientProfile.age_range.includes('13 - 17')) state.patientProfile.age = 15;
+        else if (state.patientProfile.age_range.includes('18 - 35')) state.patientProfile.age = 28;
+        else if (state.patientProfile.age_range.includes('36 - 64')) state.patientProfile.age = 45;
+        else state.patientProfile.age = 70;
+      }
+
+      if (sexSelect) {
+        state.patientProfile.biological_sex = sexSelect.value;
+      }
+
+      if (conditionsGrid) {
+        const selectedConditions = [];
+        const checked = conditionsGrid.querySelectorAll('input[type="checkbox"]:checked');
+        checked.forEach(cb => selectedConditions.push(cb.value));
+        state.patientProfile.preexisting_conditions = selectedConditions;
+      }
+
+      localStorage.setItem('mediguide_has_onboarded', 'true');
+      saveProfile();
+      updateUIProfileDisplays();
+      hideModal();
+    });
+  }
+
+  if (btnClose) {
+    btnClose.addEventListener('click', hideModal);
+  }
+
+  if (btnEditProfile) {
+    btnEditProfile.addEventListener('click', showModal);
+  }
+
+  if (btnHeaderProfile) {
+    btnHeaderProfile.addEventListener('click', showModal);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Update All Profile Elements Across Desktop / Tablet / Mobile UI
+// -----------------------------------------------------------------------------
+function updateUIProfileDisplays() {
+  const p = state.patientProfile;
+  const userName = p.name || 'Patient';
+
+  // 1. Header
+  const headerName = document.getElementById('header-user-name');
+  if (headerName) headerName.textContent = userName;
+
+  const headerAvatar = document.getElementById('header-avatar-circle');
+  if (headerAvatar) {
+    if (p.photo) {
+      headerAvatar.innerHTML = `<img src="${p.photo}" alt="${escapeHtml(userName)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    } else {
+      headerAvatar.textContent = '🧑‍💼';
+    }
+  }
+
+  // 2. Doctor Hero Card personalized greeting
+  const heroName = document.getElementById('hero-user-name');
+  if (heroName) heroName.textContent = userName;
+
+  // 3. Sidebar User Card
+  const sidebarName = document.getElementById('sidebar-user-name');
+  if (sidebarName) sidebarName.textContent = `👋 ${userName}`;
+
+  const sidebarAvatar = document.getElementById('sidebar-user-avatar');
+  if (sidebarAvatar) {
+    if (p.photo) {
+      sidebarAvatar.innerHTML = `<img src="${p.photo}" alt="${escapeHtml(userName)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    } else {
+      sidebarAvatar.textContent = '🧑‍💼';
+    }
+  }
+
+  const sidebarDetails = document.getElementById('sidebar-user-details');
+  if (sidebarDetails) {
+    const condList = p.preexisting_conditions || [];
+    const condStr = condList.length > 0
+      ? condList[0] + (condList.length > 1 ? ` (+${condList.length - 1})` : '')
+      : 'None recorded';
+    sidebarDetails.innerHTML = `📅 ${escapeHtml(p.age_range || 'Young Adult')}<br>⚧ ${escapeHtml(p.biological_sex || 'Male')} · 🩺 ${escapeHtml(condStr)}`;
+  }
+
+  // 4. Sync Sidebar Controls
+  const sidebarAgeRange = document.getElementById('sidebar-age-range');
+  if (sidebarAgeRange && p.age_range) sidebarAgeRange.value = p.age_range;
+
+  const sidebarAgeSlider = document.getElementById('sidebar-age-slider');
+  const sidebarAgeVal = document.getElementById('sidebar-age-val');
+  if (sidebarAgeSlider && p.age) {
+    sidebarAgeSlider.value = p.age;
+    if (sidebarAgeVal) sidebarAgeVal.textContent = p.age;
+  }
+
+  const sidebarSex = document.getElementById('sidebar-sex');
+  if (sidebarSex && p.biological_sex) sidebarSex.value = p.biological_sex;
+
+  const pregnantGroup = document.getElementById('sidebar-pregnant-group');
+  if (pregnantGroup) {
+    if (p.biological_sex === 'Female') pregnantGroup.classList.remove('hidden');
+    else pregnantGroup.classList.add('hidden');
+  }
+
+  // Sync tags
+  renderTagList('conditions-tags-container', p.preexisting_conditions, (newTags) => {
+    p.preexisting_conditions = newTags;
+    saveProfile();
+    updateUIProfileDisplays();
+  });
 }
 
 // -----------------------------------------------------------------------------
@@ -273,6 +499,15 @@ function renderTagList(containerId, tagArray, onUpdate, colorClass = '') {
 
 function saveProfile() {
   localStorage.setItem('mediguide_profile', JSON.stringify(state.patientProfile));
+  const sDetails = document.getElementById('sidebar-user-details');
+  if (sDetails) {
+    const p = state.patientProfile;
+    const condList = p.preexisting_conditions || [];
+    const condStr = condList.length > 0
+      ? condList[0] + (condList.length > 1 ? ` (+${condList.length - 1})` : '')
+      : 'None recorded';
+    sDetails.innerHTML = `📅 ${escapeHtml(p.age_range || 'Young Adult')}<br>⚧ ${escapeHtml(p.biological_sex || 'Male')} · 🩺 ${escapeHtml(condStr)}`;
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -390,14 +625,20 @@ function appendUserMessage(text) {
   const msgDiv = document.createElement('div');
   msgDiv.className = 'chat-message user';
   const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const userName = state.patientProfile.name || 'You';
+  const userPhoto = state.patientProfile.photo;
+
+  const avatarContent = userPhoto
+    ? `<img src="${userPhoto}" alt="${escapeHtml(userName)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+    : `🧑‍💼`;
 
   msgDiv.innerHTML = `
     <div class="chat-avatar-col">
-      <div class="chat-avatar-placeholder">🧑‍💼</div>
+      <div class="chat-avatar-placeholder" style="overflow:hidden;display:flex;align-items:center;justify-content:center;">${avatarContent}</div>
     </div>
     <div class="chat-bubble">
       <div class="chat-bubble-header">
-        <span class="chat-sender-name">You</span>
+        <span class="chat-sender-name">${escapeHtml(userName)}</span>
         <span class="chat-time-tag">${timeStr}</span>
       </div>
       <p style="margin:0;font-size:0.96rem;">${escapeHtml(text)}</p>

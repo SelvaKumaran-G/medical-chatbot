@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Dr. MediGuide AI — Medical Chatbot</title>
   <meta name="description" content="Advanced clinical AI application with ML-backed condition prediction, pathophysiological symptom-match explanation, reference tablet suggestions, drug safety checks, and emergency triage.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +11,87 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-light">
+
+  <!-- ===================================================================== -->
+  <!-- 🎬 ONBOARDING WELCOME MODAL: Name + Optional Photo + Quick Profile    -->
+  <!-- ===================================================================== -->
+  <div id="onboarding-modal" class="onboarding-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboarding-title-text">
+    <div class="onboarding-container">
+      <button class="onboarding-close-btn" id="btn-close-onboard" title="Close modal" aria-label="Close modal">&times;</button>
+      
+      <img src="assets/doctor_avatar.png" class="onboarding-avatar" alt="Dr. MediGuide AI" onerror="this.outerHTML='<div class=\'onboarding-avatar-placeholder\'>👨‍⚕️</div>'">
+      <h2 id="onboarding-title-text" class="onboarding-title">Welcome to Dr. MediGuide AI</h2>
+      <p class="onboarding-subtitle">
+        Your personal AI Medical Assistant is ready to help.<br>
+        Please enter your details so I can personalize your diagnostic insights and safety checks.
+      </p>
+
+      <form id="onboarding-form" class="onboarding-form">
+        <div class="form-group">
+          <label class="form-label" for="onboard-name-input">Your Name <span class="required-asterisk">*</span></label>
+          <input type="text" id="onboard-name-input" class="form-input" placeholder="e.g. Rahul, Priya, Alex…" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Profile Photo <span class="text-muted">(optional)</span></label>
+          <div class="photo-upload-row">
+            <div id="onboard-photo-preview" class="photo-preview-circle">🧑‍💼</div>
+            <input type="file" id="onboard-photo-input" class="file-input" accept="image/*">
+            <label for="onboard-photo-input" class="btn btn-outline btn-sm">📷 Choose Photo</label>
+          </div>
+          <span class="form-caption">Personalizes your chat avatar and consultation experience.</span>
+        </div>
+
+        <hr class="form-divider">
+        <h4 class="form-subheading">🩺 Quick Health Details <span class="text-muted">(optional)</span></h4>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="onboard-age-range">Age Bracket</label>
+            <select id="onboard-age-range" class="form-select">
+              <option value="Infant / Child (0 - 12 yrs)">Infant / Child (0 - 12 yrs)</option>
+              <option value="Adolescent (13 - 17 yrs)">Adolescent (13 - 17 yrs)</option>
+              <option value="Young Adult (18 - 35 yrs)" selected>Young Adult (18 - 35 yrs)</option>
+              <option value="Adult (36 - 64 yrs)">Adult (36 - 64 yrs)</option>
+              <option value="Senior / Geriatric (65+ yrs)">Senior / Geriatric (65+ yrs)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="onboard-sex">Biological Sex</label>
+            <select id="onboard-sex" class="form-select">
+              <option value="Unspecified">Unspecified</option>
+              <option value="Male" selected>Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pre-existing Chronic Diseases?</label>
+          <div class="chip-select-grid" id="onboard-conditions-grid">
+            <label class="chip-checkbox"><input type="checkbox" value="Type 2 Diabetes"><span>Type 2 Diabetes</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Hypertension (High Blood Pressure)" checked><span>Hypertension</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Chronic Kidney Disease (CKD)"><span>Kidney Disease</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Liver Cirrhosis / Hepatic Disease"><span>Liver Disease</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Bronchial Asthma / COPD"><span>Asthma / COPD</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Peptic Ulcer Disease / Acid Reflux (GERD)"><span>Ulcer / GERD</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Coronary Artery Disease (CAD) / Heart Disease"><span>Heart Disease</span></label>
+            <label class="chip-checkbox"><input type="checkbox" value="Thyroid Disorder"><span>Thyroid</span></label>
+          </div>
+        </div>
+
+        <div class="form-actions" style="margin-top:1.2rem;">
+          <button type="submit" class="btn btn-primary btn-large btn-block" id="btn-start-consultation">
+            🚀 Start Clinical Consultation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-overlay" class="sidebar-overlay hidden" aria-hidden="true"></div>
 
   <!-- Emergency Red-Flag Alert Banner -->
   <div id="emergency-banner" class="emergency-banner hidden" role="alert" aria-live="assertive">
@@ -29,6 +110,13 @@
   <header class="app-header">
     <div class="header-inner">
       <div class="brand">
+        <button class="btn-sidebar-hamburger" id="btn-sidebar-hamburger" title="Toggle Clinical Profile Sidebar" aria-label="Toggle Clinical Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="hamburger-icon">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
         <div class="brand-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -46,8 +134,9 @@
       </div>
 
       <div class="header-actions">
-        <button class="btn-sidebar-toggle" id="btn-sidebar-toggle" title="Toggle Patient Profile Sidebar" aria-label="Toggle Sidebar">
-          <span class="sidebar-toggle-icon">👤 Patient Profile</span>
+        <button class="user-profile-header-btn" id="btn-header-profile" title="View / Edit Profile">
+          <div class="header-avatar-circle" id="header-avatar-circle">🧑‍💼</div>
+          <span class="header-user-name" id="header-user-name">User</span>
         </button>
         <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
           <span class="theme-icon-light">☀️</span>
@@ -58,15 +147,36 @@
   </header>
 
   <!-- ===================================================================== -->
-  <!-- TWO-COLUMN STREAMLIT PARITY LAYOUT: Left Sidebar + Main Chat View     -->
+  <!-- RESPONSIVE AUTO-ADAPTIVE LAYOUT: Desktop / Tablet / Mobile            -->
   <!-- ===================================================================== -->
   <div class="app-layout">
 
     <!-- ── LEFT SIDEBAR: Patient Clinical Profile (Streamlit Parity) ── -->
-    <aside class="app-sidebar" id="app-sidebar">
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Patient Profile Sidebar">
       <div class="sidebar-inner">
 
-        <!-- Sidebar Header -->
+        <!-- Mobile Close Button -->
+        <div class="sidebar-mobile-header">
+          <span class="sidebar-mobile-title">Clinical Profile</span>
+          <button class="btn-sidebar-close" id="btn-sidebar-close" title="Close Sidebar" aria-label="Close Sidebar">&times;</button>
+        </div>
+
+        <!-- User Profile Card (Streamlit Parity) -->
+        <div class="sidebar-user-card" id="sidebar-user-card">
+          <div class="sidebar-user-avatar-wrap">
+            <div class="sidebar-user-avatar-circle" id="sidebar-user-avatar">🧑‍💼</div>
+          </div>
+          <div class="sidebar-user-name" id="sidebar-user-name">👋 Patient</div>
+          <div class="sidebar-user-details" id="sidebar-user-details">
+            📅 Young Adult (18 - 35 yrs)<br>
+            ⚧ Male · 🩺 Hypertension
+          </div>
+          <button class="btn btn-outline btn-sm btn-edit-profile-modal" id="btn-edit-profile-modal">
+            ✏️ Edit Profile / Switch User
+          </button>
+        </div>
+
+        <!-- Sidebar Section Header -->
         <div class="sidebar-header">
           <h2 class="sidebar-title">👤 Patient Clinical Profile</h2>
           <p class="sidebar-caption">
@@ -283,7 +393,7 @@
                 <span class="chat-sender-name">Dr. MediGuide AI</span>
                 <span class="chat-time-tag">Active</span>
               </div>
-              <p>
+              <p id="chat-welcome-text">
                 Hello! I am ready to evaluate your clinical presentation. You can:
               </p>
               <ul class="styled-chat-list">
