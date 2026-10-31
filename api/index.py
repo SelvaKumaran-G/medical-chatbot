@@ -541,6 +541,15 @@ def predict_conditions_pure(active_symptoms: List[str], top_k: int = 3) -> List[
         for c in range(len(classes))
     ]
 
+    # Clinical hallmark symptom reinforcement
+    # Conditions whose hallmark clinical triad / tetrad are present receive evidence boost
+    for c_idx, cond in enumerate(classes):
+        hallmarks = CONDITION_HALLMARK_SYMPTOMS.get(cond, [])
+        if hallmarks:
+            matching = [s for s in active_symptoms if s in hallmarks]
+            if len(matching) >= 2:
+                z[c_idx] += (len(matching) * 1.5) + ((len(matching) / len(hallmarks)) * 1.0)
+
     max_z = max(z)
     exp_z = [math.exp(val - max_z) for val in z]
     total_exp = sum(exp_z)
