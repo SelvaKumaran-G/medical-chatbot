@@ -1111,14 +1111,27 @@ body.theme-dark .example-pill {
 }
 
 .chat-message.user .chat-bubble {
-  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
-  border-color: #93c5fd;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: 1.5px solid #1e40af;
+  color: #ffffff;
   max-width: 80%;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
 }
 
-body.theme-dark .chat-message.user .chat-bubble {
-  background: linear-gradient(135deg, #111a2e 0%, #152238 100%);
-  border-color: #2563eb;
+.chat-message.user .chat-bubble p {
+  color: #ffffff !important;
+}
+
+.chat-message.user .chat-sender-name {
+  color: #ffffff !important;
+}
+
+.chat-message.user .chat-time-tag {
+  color: #dbeafe !important;
+}
+
+.chat-message.user .chat-bubble-header {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.3) !important;
 }
 
 .chat-bubble-header {

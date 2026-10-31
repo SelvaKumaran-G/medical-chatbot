@@ -39,51 +39,17 @@
             <input type="file" id="onboard-photo-input" class="file-input" accept="image/*">
             <label for="onboard-photo-input" class="btn btn-outline btn-sm">📷 Choose Photo</label>
           </div>
-          <span class="form-caption">Personalizes your chat avatar and consultation experience.</span>
-        </div>
-
-        <hr class="form-divider">
-        <h4 class="form-subheading">🩺 Quick Health Details <span class="text-muted">(optional)</span></h4>
-
-        <div class="form-row-2">
-          <div class="form-group">
-            <label class="form-label" for="onboard-age-range">Age Bracket</label>
-            <select id="onboard-age-range" class="form-select">
-              <option value="Infant / Child (0 - 12 yrs)">Infant / Child (0 - 12 yrs)</option>
-              <option value="Adolescent (13 - 17 yrs)">Adolescent (13 - 17 yrs)</option>
-              <option value="Young Adult (18 - 35 yrs)" selected>Young Adult (18 - 35 yrs)</option>
-              <option value="Adult (36 - 64 yrs)">Adult (36 - 64 yrs)</option>
-              <option value="Senior / Geriatric (65+ yrs)">Senior / Geriatric (65+ yrs)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="onboard-sex">Biological Sex</label>
-            <select id="onboard-sex" class="form-select">
-              <option value="Unspecified">Unspecified</option>
-              <option value="Male" selected>Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
+          <span class="form-caption">Personalizes your consultation and avatar.</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Pre-existing Chronic Diseases?</label>
-          <div class="chip-select-grid" id="onboard-conditions-grid">
-            <label class="chip-checkbox"><input type="checkbox" value="Type 2 Diabetes"><span>Type 2 Diabetes</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Hypertension (High Blood Pressure)" checked><span>Hypertension</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Chronic Kidney Disease (CKD)"><span>Kidney Disease</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Liver Cirrhosis / Hepatic Disease"><span>Liver Disease</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Bronchial Asthma / COPD"><span>Asthma / COPD</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Peptic Ulcer Disease / Acid Reflux (GERD)"><span>Ulcer / GERD</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Coronary Artery Disease (CAD) / Heart Disease"><span>Heart Disease</span></label>
-            <label class="chip-checkbox"><input type="checkbox" value="Thyroid Disorder"><span>Thyroid</span></label>
-          </div>
+          <label class="form-label" for="onboard-age-input">Age (Years) <span class="required-asterisk">*</span></label>
+          <input type="number" id="onboard-age-input" class="form-input" min="1" max="115" value="28" placeholder="e.g. 28" required>
         </div>
 
-        <div class="form-actions" style="margin-top:1.2rem;">
+        <div class="form-actions" style="margin-top:1.4rem;">
           <button type="submit" class="btn btn-primary btn-large btn-block" id="btn-start-consultation">
-            🚀 Start Clinical Consultation
+            🚀 Enter Consultation
           </button>
         </div>
       </form>
